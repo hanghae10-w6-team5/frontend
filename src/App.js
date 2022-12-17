@@ -4,6 +4,7 @@ import MainPage from './redux/components/MainPage';
 import TopBar from './redux/components/TopBar';
 import UserPage from './redux/components/UserPage';
 import SignUp from './redux/components/SignUpPage';
+import Login from './redux/components/LoginPage';
 
 function App() {
     return (
@@ -28,7 +29,7 @@ function App() {
                     }
                 ></Route>
                 <Route path="/signup" element={<SignUp />}></Route>
-                <Route path="/" element></Route>
+                <Route path="/login" element={<Login />}></Route>
                 <Route path="/" element></Route>
             </Routes>
         </div>
