@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import MainPage from './redux/components/MainPage';
 import TopBar from './redux/components/TopBar';
 import UserPage from './redux/components/UserPage';
+import SignUp from './redux/components/SignUpPage';
 
 function App() {
     return (
@@ -18,7 +19,7 @@ function App() {
                     }
                 ></Route>
                 <Route path="/user" element={<UserPage />}></Route>
-                <Route path="/" element></Route>
+                <Route path="/signup" element={<SignUp />}></Route>
                 <Route path="/" element></Route>
             </Routes>
         </div>
