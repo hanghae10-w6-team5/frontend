@@ -3,12 +3,13 @@ import styled from 'styled-components';
 
 const UserPage = () => {
     return (
-        <StFlex style={{ height: '100vh', backgroundColor: 'gray' }}>
+        <StFlex style={{ height: '100vh' }}>
             <StFlex
                 style={{
                     width: '500px',
                     height: '500px',
                     backgroundColor: 'white',
+                    boxShadow: '0 0 10px 1px gray',
                 }}
             >
                 <StFlex style={{ flexDirection: 'column' }}>
