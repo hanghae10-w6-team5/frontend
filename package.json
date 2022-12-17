@@ -1,0 +1,47 @@
+{
+  "name": "team-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cross-env NODE_ENV=test npx jest --forceExit",
+    "test:silent": "cross-env NODE_ENV=test npx jest --silent --forceExit",
+    "test:coverage": "cross-env NODE_ENV=test npx jest --coverage --forceExit",
+    "test:unit:users": "cross-env NODE_ENV=test npx jest __test__/unit/users --forceExit --passWithNoTests",
+    "test:integration": "cross-env NODE_ENV=test npx jest __test__/integration --forceExit --passWithNoTests",
+    "test:integration:users": "cross-env NODE_ENV=test npx jest __test__/integration/users.integration.spec.js --forceExit --passWithNoTests",
+    "test:integration:users:silent": "cross-env NODE_ENV=test npx jest __test__/integration/users.integration.spec.js --silent --forceExit --passWithNoTests",
+    "lint": "eslint src",
+    "dev": "cross-env NODE_ENV=development nodemon src/app.js",
+    "db:create": "npx sequelize db:create --config ./src/config/config.js",
+    "db:migrate": "npx sequelize db:migrate --config ./src/config/config.js --migrations-path ./src/migrations --models-path ./src/models",
+    "db:drop": "npx sequelize db:drop --config ./src/config/config.js",
+    "db_test:create": "cross-env NODE_ENV=test npx sequelize db:create --config ./src/config/config.js",
+    "db_test:migrate": "cross-env NODE_ENV=test npx sequelize db:migrate --config ./src/config/config.js --migrations-path ./src/migrations --models-path ./src/models",
+    "db_test:drop": "cross-env NODE_ENV=test npx sequelize db:drop --config ./src/config/config.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "class-validator": "^0.14.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.3",
+    "eslint-config-airbnb": "^19.0.4",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3",
+    "passport": "^0.6.0",
+    "sequelize": "^6.27.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8.29.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "jest": "^29.3.1",
+    "nodemon": "^2.0.20",
+    "sequelize-cli": "^6.5.2",
+    "supertest": "^6.3.3"
+  }
+}
