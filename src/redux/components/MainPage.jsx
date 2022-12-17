@@ -1,111 +1,120 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const MainPage = () => {
-  return (
-    <StContainer>
-      {/* <img /> */}
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <StBtn>상품등록</StBtn>
-      </div>
-      <StPosts>
-        <StPost>
-          <img
-            style={{ width: "210px" }}
-            src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
-          />
-          <div>제목</div>
-          <div>가격</div>
-          <StFlexSpacebtw>
-            <div>아이디</div>
-            <div>❤️</div>
-          </StFlexSpacebtw>
-        </StPost>
-        <div>
-          <img
-            style={{ width: "210px" }}
-            src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
-          />
-          <div>제목</div>
-          <div>가격</div>
-          <StFlexSpacebtw>
-            <div>아이디</div>
-            <div>❤️</div>
-          </StFlexSpacebtw>
-        </div>
-        <div>
-          <img
-            style={{ width: "210px" }}
-            src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
-          />
-          <div>제목</div>
-          <div>가격</div>
-          <StFlexSpacebtw>
-            <div>아이디</div>
-            <div>❤️</div>
-          </StFlexSpacebtw>
-        </div>
-        <div>
-          <img
-            style={{ width: "210px" }}
-            src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
-          />
-          <div>제목</div>
-          <div>가격</div>
-          <StFlexSpacebtw>
-            <div>아이디</div>
-            <div>❤️</div>
-          </StFlexSpacebtw>
-        </div>
-        <div>
-          <img
-            style={{ width: "210px" }}
-            src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
-          />
-          <div>제목</div>
-          <div>가격</div>
-          <StFlexSpacebtw>
-            <div>아이디</div>
-            <div>❤️</div>
-          </StFlexSpacebtw>
-        </div>
-      </StPosts>
-    </StContainer>
-  );
+    return (
+        <StContainer>
+            <img
+                style={{ width: '100%', height: '200px' }}
+                src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
+            />
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    margin: '0 0 30px 0',
+                }}
+            >
+                <StBtn>상품 등록해주세요 ㅋ</StBtn>
+            </div>
+            <StPosts>
+                <StPost>
+                    <img
+                        style={{ width: '210px' }}
+                        src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
+                    />
+                    <div>제목</div>
+                    <div>가격</div>
+                    <StFlexSpacebtw>
+                        <div>아이디</div>
+                        <div>❤️</div>
+                    </StFlexSpacebtw>
+                </StPost>
+                <div>
+                    <img
+                        style={{ width: '210px' }}
+                        src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
+                    />
+                    <div>제목</div>
+                    <div>가격</div>
+                    <StFlexSpacebtw>
+                        <div>아이디</div>
+                        <div>❤️</div>
+                    </StFlexSpacebtw>
+                </div>
+                <div>
+                    <img
+                        style={{ width: '210px' }}
+                        src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
+                    />
+                    <div>제목</div>
+                    <div>가격</div>
+                    <StFlexSpacebtw>
+                        <div>아이디</div>
+                        <div>❤️</div>
+                    </StFlexSpacebtw>
+                </div>
+                <div>
+                    <img
+                        style={{ width: '210px' }}
+                        src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
+                    />
+                    <div>제목</div>
+                    <div>가격</div>
+                    <StFlexSpacebtw>
+                        <div>아이디</div>
+                        <div>❤️</div>
+                    </StFlexSpacebtw>
+                </div>
+                <div>
+                    <img
+                        style={{ width: '210px' }}
+                        src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
+                    />
+                    <div>제목</div>
+                    <div>가격</div>
+                    <StFlexSpacebtw>
+                        <div>아이디</div>
+                        <div>❤️</div>
+                    </StFlexSpacebtw>
+                </div>
+            </StPosts>
+        </StContainer>
+    );
 };
 
 const StContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 
-  max-width: 1200px;
-  width: 95%;
-  padding: 40px;
-  margin: 0 auto;
+    max-width: 1200px;
+    width: 95%;
+    padding: 40px;
+    margin: 0 auto;
 `;
 
 const StBtn = styled.button`
-  width: 150px;
-  height: 40px;
-  align-items: center;
+    width: 150px;
+    height: 40px;
+    align-items: center;
 
-  margin: 0 10px 20px 0;
+    margin: 0 10px 20px 0;
 `;
 
 const StPosts = styled.div`
-  display: flex;
+    display: flex;
 
-  gap: 35px;
-  flex-wrap: wrap;
+    gap: 35px;
+    flex-wrap: wrap;
 `;
 
 const StPost = styled.div`
-  /* border: 2px solid gray; */
+    /* border: 2px solid gray; */
 `;
 
 const StFlexSpacebtw = styled.div`
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 `;
 
 export default MainPage;
