@@ -18,8 +18,17 @@ function App() {
                         </div>
                     }
                 ></Route>
-                <Route path="/user" element={<UserPage />}></Route>
+                <Route
+                    path="/user"
+                    element={
+                        <div>
+                            <TopBar />
+                            <UserPage />
+                        </div>
+                    }
+                ></Route>
                 <Route path="/signup" element={<SignUp />}></Route>
+                <Route path="/" element></Route>
                 <Route path="/" element></Route>
             </Routes>
         </div>
