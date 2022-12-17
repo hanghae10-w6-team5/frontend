@@ -4,8 +4,14 @@ import styled from 'styled-components';
 
 const TopBar = () => {
     return (
-        <StFlex justifyContent="space-between">
-            <div style={{ marginLeft: '40px' }}>탈덕마켓</div>
+        <StFlex
+            style={{ justifyContent: 'space-between', alignItems: 'center' }}
+        >
+            <Link to="/" style={{ color: 'black', textDecoration: 'none' }}>
+                <div style={{ marginLeft: '40px', cursor: 'pointer' }}>
+                    탈덕마켓
+                </div>
+            </Link>
             <div style={{ marginRight: '40px', display: 'flex' }}>
                 <StBtn mr="10px">로그인</StBtn>
                 <StBtn>회원가입</StBtn>
@@ -21,6 +27,7 @@ const StFlex = styled.div`
     max-width: 1200px;
     width: 95%;
     margin: 10px auto;
+    justify-content: space-between;
 
     display: flex;
     justify-content: ${(props) => props.justifyContent || 'none'};
@@ -34,6 +41,7 @@ const StUser = styled.button`
     border-radius: 100%;
 
     overflow: hidden;
+    cursor: pointer;
 
     :hover {
         background-color: green;
