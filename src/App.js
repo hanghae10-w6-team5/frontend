@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 
-import MainPage from './redux/components/MainPage';
-import TopBar from './redux/components/TopBar';
-import UserPage from './redux/components/UserPage';
-import SignUp from './redux/components/SignUpPage';
-import Login from './redux/components/LoginPage';
+import MainPage from './components/MainPage';
+import TopBar from './components/TopBar';
+import UserPage from './components/UserPage';
+import SignUp from './components/SignUpPage';
+import Login from './components/LoginPage';
 
 function App() {
     return (
