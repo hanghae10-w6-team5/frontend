@@ -1,10 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
 
-import MainPage from './components/MainPage';
-import TopBar from './components/TopBar';
-import UserPage from './components/UserPage';
-import SignUp from './components/SignUpPage';
-import Login from './components/LoginPage';
+import MainPage from './routes/MainPage';
+import TopBar from './components/layout/TopBar';
+import UserPage from './routes/UserPage';
+import SignUp from './routes/SignUpPage';
+import Login from './routes/LoginPage';
+import Detail from './routes/Detail';
+import DetailForm from './routes/DetailForm';
 
 function App() {
     return (
@@ -30,7 +32,8 @@ function App() {
                 ></Route>
                 <Route path="/signup" element={<SignUp />}></Route>
                 <Route path="/login" element={<Login />}></Route>
-                <Route path="/" element></Route>
+                <Route path="/detailform" element={<DetailForm />}></Route>
+                <Route path="/detail" element={<Detail />}></Route>
             </Routes>
         </div>
     );

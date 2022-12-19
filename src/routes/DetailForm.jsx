@@ -1,14 +1,14 @@
 import React from 'react';
-import DetailProductInfo from '../components/Detail/DetailProductInfo';
-import DetailComments from '../components/Detail/DetailComments';
+import DetailProductForm from '../components/product/DetailProductForm';
 import styled from 'styled-components';
 
-const Detail = () => {
+const DetailForm = () => {
     return (
         <Wrap>
-            <Title>{/* <h1>상품 상세 페이지</h1> */}</Title>
-            <DetailProductInfo></DetailProductInfo>
-            <DetailComments></DetailComments>
+            <Title>
+                <h1>상품 등록</h1>
+            </Title>
+            <DetailProductForm></DetailProductForm>
         </Wrap>
     );
 };
@@ -26,8 +26,8 @@ const Wrap = styled.div`
 
 const Title = styled.div`
     /* width: 100%; */
-    /* margin-top: 100px; */
-    margin-bottom: 30px;
+    margin-top: 100px;
+    margin-bottom: 50px;
     height: 50px;
     /* background-color: red; */
     display: flex;
@@ -36,4 +36,4 @@ const Title = styled.div`
     align-items: center;
 `;
 
-export default Detail;
+export default DetailForm;
