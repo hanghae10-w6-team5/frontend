@@ -1,7 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const MainPage = () => {
+    const token = localStorage.getItem('token');
+    const navigate = useNavigate();
+
+    const addProduct = () => {
+        if (!token) return alert('로그인이 필요한 서비스 입니다');
+        return navigate('detailform');
+    };
+
     return (
         <StContainer>
             <img
@@ -15,7 +24,7 @@ const MainPage = () => {
                     margin: '0 0 30px 0',
                 }}
             >
-                <StBtn>상품 등록해주세요 ㅋ</StBtn>
+                <StBtn onClick={addProduct}>상품 등록해주세요 ㅋ</StBtn>
             </div>
             <StPosts>
                 <StPost>
@@ -97,6 +106,7 @@ const StBtn = styled.button`
     width: 150px;
     height: 40px;
     align-items: center;
+    cursor: pointer;
 
     margin: 0 10px 20px 0;
 `;
