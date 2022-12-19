@@ -1,8 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const TopBar = () => {
+    const [isHovering, setiIsHovering] = useState(false);
+    const navigate = useNavigate();
+    useEffect(() => {
+        localStorage.setItem('token', 'sadjkashdkj');
+    }, []);
+    const token = localStorage.getItem('token');
+    console.log(token);
+
+    const logout = () => {
+        localStorage.clear();
+        navigate('/');
+    };
+
+    const handleMouseOver = () => {
+        setiIsHovering(true);
+    };
+    const handleMouseOut = () => {
+        setiIsHovering(false);
+    };
+
     return (
         <StFlex
             style={{ justifyContent: 'space-between', alignItems: 'center' }}
@@ -12,13 +33,65 @@ const TopBar = () => {
                     탈덕마켓
                 </div>
             </Link>
-            <div style={{ marginRight: '40px', display: 'flex' }}>
-                <StBtn mr="10px">로그인</StBtn>
-                <StBtn>회원가입</StBtn>
-                <Link to="/user">
-                    <StUser></StUser>
-                </Link>
-            </div>
+            {!token ? (
+                <div
+                    style={{
+                        marginRight: '40px',
+                        display: 'flex',
+                        height: '50px',
+                    }}
+                >
+                    <StBtn mr="10px" onClick={() => navigate('/login')}>
+                        로그인
+                    </StBtn>
+                    <StBtn onClick={() => navigate('/signup')}>회원가입</StBtn>
+                </div>
+            ) : (
+                <div
+                    style={{
+                        marginRight: '40px',
+                        display: 'flex',
+                        height: '50px',
+
+                        position: 'relative',
+                    }}
+                >
+                    <StBtn mr="10px" onClick={logout}>
+                        로그아웃
+                    </StBtn>
+                    <div>
+                        <div
+                            onMouseOver={handleMouseOver}
+                            onMouseOut={handleMouseOut}
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+
+                                position: 'absolute',
+                                top: '5px',
+                            }}
+                        >
+                            <StUser></StUser>
+
+                            {isHovering ? (
+                                <p
+                                    style={{
+                                        fontSize: '10px',
+                                        cursor: 'pointer',
+                                    }}
+                                    onClick={() => navigate('/user')}
+                                >
+                                    상세보기
+                                </p>
+                            ) : (
+                                <p style={{ display: 'none' }}></p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
         </StFlex>
     );
 };
