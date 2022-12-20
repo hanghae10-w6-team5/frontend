@@ -33,7 +33,8 @@ function App() {
                 <Route path="/signup" element={<SignUp />}></Route>
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/detailform" element={<DetailForm />}></Route>
-                <Route path="/detail" element={<Detail />}></Route>
+                {/* <Route path="/detail" element={<Detail />}></Route> */}
+                <Route path="/:id" element={<Detail />}></Route>
             </Routes>
         </div>
     );
