@@ -1,6 +1,7 @@
 import React from 'react';
 import DetailProductInfo from '../components/product/DetailProductInfo';
-import DetailComments from '../components/comment/DetailComments';
+import DetailCommentList from '../components/comment/DetailCommentList';
+import DetailCommentForm from '../components/comment/DetailCommentForm';
 import styled from 'styled-components';
 
 const Detail = () => {
@@ -8,7 +9,8 @@ const Detail = () => {
         <Wrap>
             <Title>{/* <h1>상품 상세 페이지</h1> */}</Title>
             <DetailProductInfo></DetailProductInfo>
-            <DetailComments></DetailComments>
+            <DetailCommentList></DetailCommentList>
+            <DetailCommentForm></DetailCommentForm>
         </Wrap>
     );
 };
