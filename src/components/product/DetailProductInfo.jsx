@@ -1,20 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router';
 import styled from 'styled-components';
+import { __getPostById } from '../../redux/lib/postsApi';
+import { useDispatch, useSelector } from 'react-redux';
 
-const DetailProductInfo = () => {
+const DetailProductInfo = ({ id }) => {
+    // console.log(useParams());
+    //수정하기에서 onclick써서 함수 만들고 dispatch로 put으로 수정
+    //삭제하기에서 onclick써서 함수 만들고 dispatch로 삭제
+    const dispatch = useDispatch();
+    const { post, isLoading, error } = useSelector((store) => store.posts);
+
+    const postDetail = post.data?.data;
+    console.log(postDetail);
+
+    useEffect(() => {
+        dispatch(__getPostById(id));
+    }, [dispatch]);
+
     return (
         <ProductSection>
             <ContentButtonWrap>
                 <ModifyContentButton>수정</ModifyContentButton>
-
                 <DeleteContentButton>삭제</DeleteContentButton>
             </ContentButtonWrap>
             <TopInfo>
-                <Thumbnail></Thumbnail>
+                <Thumbnail>
+                    <img
+                        style={{ width: '380px', height: '380px' }}
+                        src={postDetail?.thumbnail}
+                    />
+                </Thumbnail>
                 <RightInfo>
-                    <ProductTitle>동방신기 탈덕템 판매합니다.</ProductTitle>
+                    <ProductTitle>{postDetail?.title}</ProductTitle>
                     <Price>
-                        50,000
+                        {postDetail?.price}
                         <span
                             style={{
                                 fontSize: '20px',
@@ -30,22 +50,26 @@ const DetailProductInfo = () => {
                             display: 'flex',
                         }}
                     >
-                        <SellerId>판매자 : subin99</SellerId>
+                        <SellerId>판매자 : {postDetail?.id}</SellerId>
                     </div>
                     <div style={{ position: 'absolute', bottom: 0, right: 0 }}>
-                        <Date>작성일자 : 2022-12-17 21:07</Date>
-                        <Date>수정일자 : 2022-12-17 21:07</Date>
+                        <Date>작성일자 : {postDetail?.createdAt}</Date>
+                        <Date>수정일자 : {postDetail?.updatedAt}</Date>
                     </div>
                     <Wish>
                         <span style={{ fontSize: '21px', marginBottom: '5px' }}>
                             ♡
                         </span>
                         <span style={{ fontSize: '21px', marginLeft: '4px' }}>
-                            123
+                            {postDetail?.likes}
                         </span>
                     </Wish>
                 </RightInfo>
             </TopInfo>
+            <div style={{ height: '15vh', padding: '20px' }}>
+                {postDetail?.detail}
+            </div>
+            <hr />
             <BottomInfo>
                 <span style={{ fontSize: '24px' }}>상품정보</span>
                 <DetailInfo>
