@@ -14,10 +14,10 @@ code {
 
 @font-face {
     font-family: 'Elice_Bold';
-    src: url(./components/fonts/Elice_Bold.ttf);
+    src: url(./assets/fonts/Elice_Bold.ttf);
 }
 
 @font-face {
     font-family: 'Elice_Regular';
-    src: url(./components/fonts/Elice_Regular.ttf);
+    src: url(./assets/fonts/Elice_Regular.ttf);
 }
