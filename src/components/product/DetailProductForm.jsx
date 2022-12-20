@@ -1,7 +1,103 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router';
+import AWS from 'aws-sdk';
 
 const DetailProductForm = () => {
+    const albumBucketName = 'sblawsimage';
+
+    const [imageSrc, setImageSrc] = useState('');
+
+    const navigate = useNavigate();
+    const [title, setTitle] = useState('');
+    const [price, setPrice] = useState(0);
+    const [detail, setDetail] = useState('');
+    const [thumbnail, setThumbnail] = useState('');
+
+    AWS.config.update({
+        region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
+        credentials: new AWS.CognitoIdentityCredentials({
+            IdentityPoolId:
+                'ap-northeast-2:08c52685-346d-4362-9490-8617a791432f', // cognito 인증 풀에서 받아온 키를 문자열로 입력합니다. (Ex. "ap-northeast-2...")
+        }),
+    });
+
+    const onChangeTitleHandler = (e) => {
+        setTitle(e.target.value);
+    };
+    const onChangePriceHandler = (e) => {
+        setPrice(+e.target.value);
+    };
+
+    const onChangeDetailHandler = (e) => {
+        setDetail(e.target.value);
+    };
+
+    const encodeFileToBase64 = (fileBlob) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(fileBlob);
+        return new Promise((resolve) => {
+            reader.onload = () => {
+                setImageSrc(reader.result);
+                resolve();
+            };
+        });
+    };
+
+    const handleFileInput = (e) => {
+        const file = e.target.files[0];
+        console.log(file);
+        setThumbnail(
+            `https://sblawsimage.s3.ap-northeast-2.amazonaws.com/${file.name}`
+        );
+
+        // S3 SDK에 내장된 업로드 함수
+        const upload = new AWS.S3.ManagedUpload({
+            params: {
+                Bucket: albumBucketName, // 업로드할 대상 버킷명
+                Body: file, // 업로드할 파일 객체
+                ContentType: file.type,
+                Key: file.name, // 업로드할 파일명 (* 확장자를 추가해야 합니다!)
+            },
+        });
+
+        const promise = upload.promise();
+
+        promise.then(
+            function (data) {
+                alert('이미지 업로드에 성공했습니다.');
+            },
+            function (err) {
+                return alert('오류가 발생했습니다: ', err.message);
+            }
+        );
+    };
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            userId: 1,
+        },
+    };
+
+    const sendData = async () => {
+        console.log(title, price, detail, thumbnail);
+        axios.post(
+            'http://dev-jn.shop/api/posts',
+            {
+                title: title,
+                detail: detail,
+                price: price,
+                thumbnail: thumbnail,
+            },
+            config
+        );
+        // await axios.get('http://dev-jn.shop/api/posts');
+        // navigate(`/${id}`)
+        //그다음 useParam으로
+    };
+
     return (
         <InputSection>
             <InputForm>
@@ -9,6 +105,7 @@ const DetailProductForm = () => {
                     <InputTitle>제목</InputTitle>
                     <Input>
                         <input
+                            name="title"
                             placeholder="상품 제목을 입력해주세요."
                             minLength={2}
                             maxLength={40}
@@ -19,6 +116,7 @@ const DetailProductForm = () => {
                                 paddingLeft: '8px',
                                 border: '1px solid #ccc',
                             }}
+                            onChange={onChangeTitleHandler}
                         ></input>
                     </Input>
                 </InputBox>
@@ -28,6 +126,7 @@ const DetailProductForm = () => {
                     <InputTitle>가격</InputTitle>
                     <Input>
                         <input
+                            name="price"
                             placeholder="숫자를 입력해주세요."
                             style={{
                                 width: '200px',
@@ -37,6 +136,7 @@ const DetailProductForm = () => {
                                 paddingLeft: '8px',
                                 border: '1px solid #ccc',
                             }}
+                            onChange={onChangePriceHandler}
                         ></input>
                         <span>원</span>
                     </Input>
@@ -53,9 +153,27 @@ const DetailProductForm = () => {
                                 value="첨부파일"
                                 placeholder="첨부파일"
                             /> */}
-                        <Label for="file">이미지 등록</Label>
-                        <Test type="file" id="file" />
-                        <Thumbnail>이미지 미리보기</Thumbnail>
+                        <Label htmlFor="file">이미지 등록</Label>
+                        <Test
+                            onChange={(e) => {
+                                encodeFileToBase64(e.target.files[0]);
+                                handleFileInput(e);
+                            }}
+                            name="thumbnail"
+                            type="file"
+                            id="file"
+                        />
+                        <Thumbnail>
+                            {imageSrc ? (
+                                <img
+                                    style={{ width: '200px', height: '200px' }}
+                                    src={imageSrc}
+                                    alt="preview-img"
+                                />
+                            ) : (
+                                '이미지 프리뷰'
+                            )}
+                        </Thumbnail>
                     </div>
                 </InputBox>
             </InputForm>
@@ -66,8 +184,9 @@ const DetailProductForm = () => {
                     </InputTitle>
                     <Input style={{ alignItems: 'center', marginTop: '95px' }}>
                         <textarea
+                            name="detail"
                             placeholder="판매 상품에 대한 상세 정보를 기재해주세요."
-                            cols
+                            // cols
                             rows={4}
                             style={{
                                 width: '800px',
@@ -77,17 +196,36 @@ const DetailProductForm = () => {
                                 boxSizing: 'border-box',
                                 marginBottom: '10px',
                                 border: '1px solid #ccc',
-                                color: '#ccc',
+                                color: '#000',
                             }}
+                            onChange={onChangeDetailHandler}
                         ></textarea>
                     </Input>
                 </InputBox>
             </InputForm>
             <ButtonBox>
-                <Button style={{ margin: 'auto' }} type="submit">
+                <Button
+                    style={{ marginRight: '5px' }}
+                    onClick={sendData}
+                    type="submit"
+                >
                     등록하기
                 </Button>
+                <Button onClick={() => navigate('/')} type="submit">
+                    돌아가기
+                </Button>
             </ButtonBox>
+            {/* <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: '48px',
+                }}
+            >
+                <Button style={{ marginRight: '5px' }}>등록하기</Button>
+                <Button>돌아가기</Button>
+            </div> */}
         </InputSection>
     );
 };
@@ -130,10 +268,15 @@ const Input = styled.div`
 `;
 
 const ButtonBox = styled.div`
-    width: 600px;
+    /* width: 600px;
     height: 50px;
     display: flex;
-    margin: auto;
+    margin: auto; */
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
     margin-top: 48px;
 `;
 
@@ -144,17 +287,19 @@ const Button = styled.button`
     border: 0;
     color: white;
     cursor: pointer;
+
+    border-radius: 5px;
 `;
 
 const Thumbnail = styled.div`
     width: 200px;
     height: 200px;
-    background-color: #b8b8b8;
-    color: white;
+    background-color: #fff;
+    color: #747373;
     justify-content: center;
     align-items: center;
     display: flex;
-    border: '1px solid #ccc';
+    border: 1px solid #b8b8b8;
 `;
 
 const FileBox = styled.div`

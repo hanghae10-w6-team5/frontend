@@ -8,8 +8,7 @@ const MainPage = () => {
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { posts, isLoading, error } = useSelector((store) => store.posts);
-    // console.log(posts);
+    const { posts, error, isLoading } = useSelector((store) => store.posts);
 
     const addProduct = () => {
         if (!token) return alert('로그인이 필요한 서비스 입니다');
@@ -18,7 +17,7 @@ const MainPage = () => {
 
     useEffect(() => {
         dispatch(__getPosts());
-    }, []);
+    }, [dispatch]);
 
     if (isLoading) {
         return <div>로딩 중....</div>;
@@ -31,7 +30,11 @@ const MainPage = () => {
     return (
         <StContainer>
             <img
-                style={{ width: '100%', height: '200px' }}
+                style={{
+                    width: '100%',
+                    height: '200px',
+                    boxShadow: '0 0 10px 3px #ff7e36',
+                }}
                 src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
             />
             <div
@@ -41,68 +44,39 @@ const MainPage = () => {
                     margin: '0 0 30px 0',
                 }}
             >
-                <StBtn onClick={addProduct}>상품 등록해주세요 ㅋ</StBtn>
+                <StBtn style={{ marginTop: '30px' }} onClick={addProduct}>
+                    상품 등록해주세요 ㅋ
+                </StBtn>
             </div>
             <StPosts>
-                {posts.map((post) => {
+                {posts.data?.map((post) => {
                     return (
-                        <StPost key={post.postId}>
+                        <StPost
+                            key={post.data.id}
+                            onClick={() => navigate(`/${post.data.postId}`)}
+                        >
                             <img
-                                style={{ width: '210px' }}
-                                src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
+                                style={{ width: '172px', height: '172px' }}
+                                src={post.data.thumbnail}
                             />
-                            <div>{post.title}</div>
-                            <div>{post.price}</div>
+                            <div style={{ maxWidth: '15ch' }}>
+                                {post.data.title}
+                            </div>
+                            <div>{post.data.price}</div>
                             <StFlexSpacebtw>
-                                <div>{post.id}</div>
-                                <div>{post.likes} ❤️</div>
+                                <div>{post.data.id}</div>
+                                <div>{post.data.likes} ❤️</div>
                             </StFlexSpacebtw>
                         </StPost>
                     );
                 })}
-                <StPost>
-                    <img
-                        style={{ width: '210px' }}
-                        src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
-                    />
-                    <div>제목</div>
-                    <div>가격</div>
-                    <StFlexSpacebtw>
-                        <div>아이디</div>
-                        <div>❤️</div>
-                    </StFlexSpacebtw>
-                </StPost>
-
-                <StPost>
-                    <img
-                        style={{ width: '210px' }}
-                        src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
-                    />
-                    <div>제목</div>
-                    <div>가격</div>
-                    <StFlexSpacebtw>
-                        <div>아이디</div>
-                        <div>❤️</div>
-                    </StFlexSpacebtw>
-                </StPost>
-                <StPost>
-                    <img
-                        style={{ width: '210px' }}
-                        src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
-                    />
-                    <div>제목</div>
-                    <div>가격</div>
-                    <StFlexSpacebtw>
-                        <div>아이디</div>
-                        <div>❤️</div>
-                    </StFlexSpacebtw>
-                </StPost>
             </StPosts>
         </StContainer>
     );
 };
 
 const StContainer = styled.div`
+    font-family: 'Elice_Bold';
     display: flex;
     flex-direction: column;
 
@@ -113,12 +87,24 @@ const StContainer = styled.div`
 `;
 
 const StBtn = styled.button`
+    font-family: 'Elice_Bold';
     width: 150px;
     height: 40px;
     align-items: center;
     cursor: pointer;
 
+    border: 1px solid #ff7e36;
+    background-color: #fff;
+    color: #ff7e36;
+    border-radius: 5px;
+
+    font-weight: bold;
     margin: 0 10px 20px 0;
+
+    :hover {
+        color: #fff;
+        background-color: #ff7e36;
+    }
 `;
 
 const StPosts = styled.div`
@@ -129,7 +115,11 @@ const StPosts = styled.div`
 `;
 
 const StPost = styled.div`
-    /* border: 2px solid gray; */
+    cursor: pointer;
+    padding: 20px;
+    box-shadow: 0 0 10px 3px #ff7e36;
+
+    border-radius: 5px;
 `;
 
 const StFlexSpacebtw = styled.div`
