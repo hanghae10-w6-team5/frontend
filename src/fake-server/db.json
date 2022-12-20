@@ -1,0 +1,22 @@
+{
+    "posts": [
+        {
+            "postId": 1,
+            "id": "abc",
+            "title": "안녕하세요",
+            "price": 1999,
+            "Thumbnail": "img",
+            "updatedAt": "2022/12/17",
+            "likes": 0
+        },
+        {
+            "postId": 2,
+            "id": "def",
+            "title": "안녕히가세요",
+            "price": 2999,
+            "Thumbnail": "img2",
+            "updatedAt": "2022/12/18",
+            "likes": 0
+        }
+    ]
+}
