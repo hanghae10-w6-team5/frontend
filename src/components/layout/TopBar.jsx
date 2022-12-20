@@ -6,11 +6,12 @@ import { useNavigate } from 'react-router-dom';
 const TopBar = () => {
     const [isHovering, setiIsHovering] = useState(false);
     const navigate = useNavigate();
+
     useEffect(() => {
         localStorage.setItem('token', 'sadjkashdkj');
     }, []);
+
     const token = localStorage.getItem('token');
-    console.log(token);
 
     const logout = () => {
         localStorage.clear();
@@ -29,7 +30,13 @@ const TopBar = () => {
             style={{ justifyContent: 'space-between', alignItems: 'center' }}
         >
             <Link to="/" style={{ color: 'black', textDecoration: 'none' }}>
-                <div style={{ marginLeft: '40px', cursor: 'pointer' }}>
+                <div
+                    style={{
+                        fontFamily: 'Elice_Bold',
+                        marginLeft: '40px',
+                        cursor: 'pointer',
+                    }}
+                >
                     탈덕마켓
                 </div>
             </Link>
@@ -56,7 +63,7 @@ const TopBar = () => {
                         position: 'relative',
                     }}
                 >
-                    <StBtn mr="10px" onClick={logout}>
+                    <StBtn mr="50px" onClick={logout}>
                         로그아웃
                     </StBtn>
                     <div>
@@ -71,10 +78,10 @@ const TopBar = () => {
 
                                 position: 'absolute',
                                 top: '5px',
+                                left: '90px',
                             }}
                         >
                             <StUser></StUser>
-
                             {isHovering ? (
                                 <p
                                     style={{
@@ -99,7 +106,7 @@ const TopBar = () => {
 const StFlex = styled.div`
     max-width: 1200px;
     width: 95%;
-    margin: 10px auto;
+    margin: 10px auto 0;
     justify-content: space-between;
 
     display: flex;
@@ -122,6 +129,7 @@ const StUser = styled.button`
 `;
 
 const StBtn = styled.button`
+    font-family: 'Elice_Bold';
     background-color: white;
     border: 0;
 
