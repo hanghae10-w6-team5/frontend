@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import DetailProductInfo from '../components/product/DetailProductInfo';
-import DetailComments from '../components/comment/DetailComments';
+import DetailCommentList from '../components/comment/DetailCommentList';
+import DetailCommentForm from '../components/comment/DetailCommentForm';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +14,8 @@ const Detail = () => {
         <Wrap>
             <Title>{/* <h1>상품 상세 페이지</h1> */}</Title>
             <DetailProductInfo id={id}></DetailProductInfo>
-            <DetailComments></DetailComments>
+            <DetailCommentList></DetailCommentList>
+            <DetailCommentForm></DetailCommentForm>
         </Wrap>
     );
 };
