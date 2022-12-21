@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { __login } from '../redux/lib/loginApi';
 
 function Login() {
     const dispatch = useDispatch();
+    const { isLoading, error } = useSelector((state) => state);
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -29,11 +30,19 @@ function Login() {
     const handleHomeBtn = () => {
         navigate('/');
     };
+    if (isLoading) {
+        <div>로딩중...</div>;
+    }
+    if (error) {
+        <div>{error.message}</div>;
+    }
 
     return (
         <Wrapper>
-            <SignUpBox onSubmit={handleLogin}>
-                <Homebtn onClick={handleHomeBtn}>↜</Homebtn>
+            <SignUpBox>
+                <Homebtn type="button" onClick={handleHomeBtn}>
+                    ↜
+                </Homebtn>
                 <h1 style={{ fontFamily: 'Elice_Bold' }}>로그인</h1>
                 <div>
                     <div>ID</div>
@@ -49,7 +58,9 @@ function Login() {
                     ></Input>
                 </div>
                 <br />
-                <SubmitBtn>로그인</SubmitBtn>
+                <SubmitBtn type="button" onClick={handleLogin}>
+                    로그인
+                </SubmitBtn>
                 <SignUpLinkWrapper>
                     <span>아직 회원이 아니신가요?</span>
                     <SignUpLink to="/signup">
