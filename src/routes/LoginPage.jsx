@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { __login } from '../redux/lib/loginApi';
 
 function Login() {
     const dispatch = useDispatch();
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const onChangeId = (e) => {
         setId(e.target.value);
@@ -16,14 +17,18 @@ function Login() {
     const onChangePassword = (e) => {
         setPassword(e.target.value);
     };
-
+    // const token = localStorage.getItem('authentication');
     const handleLogin = (e) => {
-        console.log(e);
         e.preventDefault();
         if (id === '' || password === '') {
             alert('아이디와 비밀번호를 모두 입력하세요!');
         } else {
             dispatch(__login({ id, password }));
+            // if (token) {
+            //     navigate('/');
+            // } else {
+            //     alert('로그인 실패!');
+            // }
         }
     };
 
@@ -39,6 +44,7 @@ function Login() {
                 <div>
                     <div>Password</div>
                     <Input
+                        type="password"
                         placeholder="비밀번호"
                         onChange={onChangePassword}
                     ></Input>
