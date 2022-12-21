@@ -26,9 +26,14 @@ function Login() {
         }
     };
 
+    const handleHomeBtn = () => {
+        navigate('/');
+    };
+
     return (
         <Wrapper>
             <SignUpBox onSubmit={handleLogin}>
+                <Homebtn onClick={handleHomeBtn}>↜</Homebtn>
                 <h1 style={{ fontFamily: 'Elice_Bold' }}>로그인</h1>
                 <div>
                     <div>ID</div>
@@ -75,6 +80,26 @@ const SignUpBox = styled.form`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    position: relative;
+`;
+
+const Homebtn = styled.button`
+    background-color: white;
+    color: #ff7e36;
+    font-weight: 900;
+    font-size: 40px;
+    top: 20px;
+    left: 20px;
+    border: none;
+    border-radius: 50%;
+    position: absolute;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+    }
 `;
 
 const Input = styled.input`
