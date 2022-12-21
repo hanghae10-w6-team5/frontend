@@ -120,7 +120,7 @@ const StUser = styled.button`
     cursor: pointer;
 
     :hover {
-        background-color: green;
+        background-color: #ff7e36;
     }
 `;
 
