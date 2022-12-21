@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../redux/lib/core/axiosBaseInstance';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -63,6 +63,7 @@ function SignUp() {
 
     const handleValidationId = () => {
         dispatch(__getValidId({ id: id }));
+        setIdMessage('');
     };
 
     const handleSubmit = async (e) => {
@@ -71,14 +72,12 @@ function SignUp() {
             alert('빈칸을 입력하세요!');
         } else {
             try {
-                const res = await axios.post(
-                    `https://dev-jn.shop/api/users/signup`,
-                    {
-                        id: id,
-                        password: password,
-                    }
-                );
+                const res = await axios.post(`/users/signup`, {
+                    id: id,
+                    password: password,
+                });
                 alert(res.data.message);
+                navigate('/');
             } catch (res) {
                 alert('패스워드에 id가 포함되어 있습니다.');
             }

@@ -1,23 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios from './core/axiosBaseInstance';
 
 export const __getValidId = createAsyncThunk(
     'getValidId',
     async (payload, thunkAPI) => {
         try {
-            await axios.get(`https://dev-jn.shop/api/users/signup`, {
+            await axios.get(`/users/signup/${payload.id}`, {
                 params: payload,
             });
-
-            // .then((res) => {
-            //     if (res.status === 200) {
-            //         alert('사용 가능한 아이디 입니다!');
-            //     } else if (res.status === 401) {
-            //         alert('이미 사용중인 아이디 입니다!');
-            //     }
-            // });
+            alert('사용 가능한 아이디 입니다!');
         } catch (e) {
-            alert(e);
+            console.log(e);
+            alert('이미 사용 중인 id 입니다.');
         }
     }
 );
