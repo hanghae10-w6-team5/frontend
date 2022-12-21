@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import axios from '../redux/lib/core/axiosBaseInstance';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { __getValidId } from '../redux/lib/signUpApi';
+import { __getValidId, __signUp } from '../redux/lib/signUpApi';
 
 function SignUp() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { isLoading, error } = useSelector((state) => state);
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPw, setConfirmPw] = useState('');
@@ -70,32 +70,33 @@ function SignUp() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (id === '' || password === '' || confirmPw === '') {
-            alert('빈칸을 입력하세요!');
+            alert('빈칸을 입력해주세요!');
+        } else if (!isConfirmPw || !isId || !isPassword) {
+            alert('조건에 맞게 입력해주세요!');
         } else if (!isUsableId) {
             alert('중복확인을 먼저 해주세요!');
         } else {
-            try {
-                const res = await axios.post(`/users/signup`, {
-                    id: id,
-                    password: password,
-                });
-                alert(res.data.message);
-                navigate('/login');
-            } catch (res) {
-                alert('패스워드에 id가 포함되어 있습니다.');
-            }
+            dispatch(__signUp({ id: id, password: password, navigate }));
         }
     };
 
     const handleHomeBtn = () => {
         navigate('/');
     };
+    if (isLoading) {
+        <div>로딩중...</div>;
+    }
+    if (error) {
+        <div>{error.message}</div>;
+    }
 
     return (
         <Wrapper>
             <BoxWrapper>
-                <Homebtn onClick={handleHomeBtn}>↜</Homebtn>
-                <SignUpBox onSubmit={handleSubmit}>
+                <Homebtn type="button" onClick={handleHomeBtn}>
+                    ↜
+                </Homebtn>
+                <SignUpBox>
                     <h1>회원가입</h1>
                     <IdForm>
                         <div>ID</div>
@@ -143,7 +144,9 @@ function SignUp() {
                             <FalsePwMsg>{confirmPwMessage}</FalsePwMsg>
                         )}
                     </div>
-                    <SubmitBtn type="submit">가입하기</SubmitBtn>
+                    <SubmitBtn type="button" onClick={handleSubmit}>
+                        가입하기
+                    </SubmitBtn>
                 </SignUpBox>
             </BoxWrapper>
         </Wrapper>
