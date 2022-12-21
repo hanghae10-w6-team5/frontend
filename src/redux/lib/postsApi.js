@@ -5,7 +5,7 @@ export const __getPosts = createAsyncThunk(
     'getPosts',
     async (payload, thunkAPI) => {
         try {
-            const data = await axios.get('http://dev-jn.shop/api/posts');
+            const data = await axios.get('https://dev-jn.shop/api/posts');
             return thunkAPI.fulfillWithValue(data.data);
         } catch (e) {
             return thunkAPI.rejectWithValue(e);
@@ -18,7 +18,7 @@ export const __getPostById = createAsyncThunk(
     async (payload, thunkAPI) => {
         try {
             const data = await axios.get(
-                `http://dev-jn.shop/api/posts/${payload}`
+                `https://dev-jn.shop/api/posts/${payload}`
             );
             return thunkAPI.fulfillWithValue(data.data);
         } catch (e) {

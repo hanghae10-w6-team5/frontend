@@ -3,11 +3,11 @@ import axios from 'axios';
 
 // db에서 필요한 데이터의 id값을 payload로 넘겨 받아 data를 받아옴
 export const __getComments = createAsyncThunk(
-    'getContents',
+    'getComments',
     async (payload, thunkAPI) => {
         try {
             const data = await axios.get(
-                `https://dev-jn.shop/api/posts`
+                `https://dev-jn.shop/api/posts/${payload.postId}`
                 // `http://localhost:3001/comments`
             );
             return thunkAPI.fulfillWithValue(data.data);

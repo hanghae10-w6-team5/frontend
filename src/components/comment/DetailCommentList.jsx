@@ -16,8 +16,14 @@ const DetailCommentList = () => {
     // // const [] =useState('')
     const dispatch = useDispatch();
     // const param = useParams();
-    const commentt = useSelector((state) => state.commentsSlice.comments);
-    console.log(commentt);
+    // const commentss = useSelector((state) => state.commentsSlice.comments);
+    // console.log(commentss.data);
+
+    const { post, isLoading, error } = useSelector((store) => store.posts);
+
+    const postDetail = post.data?.data;
+    console.log(post?.data?.data?.comments);
+    const x = post?.data?.data?.comments;
 
     const editComment = async (comment, id) => {
         const editing = prompt('댓글 내용 수정', '');
@@ -38,36 +44,39 @@ const DetailCommentList = () => {
     return (
         <CommentsSection>
             <CommnetList>
-                {commentt?.map((comment) => {
+                {x?.map((comment) => {
                     return (
-                        <CommentsBox key={comment.id}>
+                        <CommentsBox key={comment?.id}>
                             <Content>
                                 <UserId>
-                                    {comment.id}
+                                    {comment?.id}
                                     <span
                                         style={{
                                             marginLeft: '20px',
                                             color: '#585858',
                                         }}
                                     >
-                                        {comment.updateAt}
+                                        {comment?.updatedAt}
                                     </span>
                                 </UserId>
-                                <Comment>{comment.comment}</Comment>
+                                <Comment>{comment?.comment}</Comment>
                             </Content>
                             <EditCommentWrap>
                                 <EditCommentButton
                                     // type='button' 을 추가해야 form의 영향에서 벗어남
                                     type="button"
                                     onClick={() =>
-                                        editComment(comment.comment, comment.id)
+                                        editComment(
+                                            comment?.comment,
+                                            comment?.id
+                                        )
                                     }
                                 >
                                     수정
                                 </EditCommentButton>
                                 <DeleteCommentButton
                                     type="button"
-                                    onClick={() => deleteComment(comment.id)}
+                                    onClick={() => deleteComment(comment?.id)}
                                 >
                                     삭제
                                 </DeleteCommentButton>
