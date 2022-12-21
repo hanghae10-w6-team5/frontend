@@ -37,7 +37,7 @@ export const commentsSlice = createSlice({
         },
         [__submitComment.fulfilled]: (state, action) => {
             state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-            state.comments = action.payload; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+            state.comments = [action.payload, ...state.comments]; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
         },
         [__submitComment.rejected]: (state, action) => {
             state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
@@ -49,7 +49,13 @@ export const commentsSlice = createSlice({
         },
         [__editComment.fulfilled]: (state, action) => {
             state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-            state.comments = action.payload; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+            state.comments = state.comments.map((e) => ({
+                ...e,
+                comment:
+                    e.id === action.payload.id
+                        ? action.payload.comment
+                        : e.comment,
+            })); // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
         },
         [__editComment.rejected]: (state, action) => {
             state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
@@ -61,7 +67,9 @@ export const commentsSlice = createSlice({
         },
         [__deleteComment.fulfilled]: (state, action) => {
             state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-            state.comments = action.payload; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+            state.comments = state.comments.filter(
+                (comment) => comment.id !== action.payload
+            ); // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
         },
         [__deleteComment.rejected]: (state, action) => {
             state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
