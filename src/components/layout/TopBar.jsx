@@ -7,11 +7,7 @@ const TopBar = () => {
     const [isHovering, setiIsHovering] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        localStorage.setItem('token', 'sadjkashdkj');
-    }, []);
-
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authentication');
 
     const logout = () => {
         localStorage.clear();
