@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { __getValidId } from '../redux/lib/signUpApi';
 
 function SignUp() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
@@ -69,11 +71,20 @@ function SignUp() {
             alert('빈칸을 입력하세요!');
         } else {
             try {
-                await axios.post(`http://localhost:3001/users`, {
-                    id: id,
-                    password: password,
-                });
-            } catch (error) {
+                await axios
+                    .post(`https://dev-jn.shop/api/users/signup`, {
+                        id: id,
+                        password: password,
+                    })
+                    .then((res) => {
+                        if (res.status === 201) {
+                            alert('회원가입에 성공하였습니다!');
+                            navigate('/login');
+                        } else if (res.status === 412) {
+                            alert('회원가입에 실패하였습니다!!');
+                        }
+                    });
+            } catch (e) {
                 alert(e);
             }
         }
