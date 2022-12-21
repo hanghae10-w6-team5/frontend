@@ -17,18 +17,12 @@ function Login() {
     const onChangePassword = (e) => {
         setPassword(e.target.value);
     };
-    // const token = localStorage.getItem('authentication');
     const handleLogin = (e) => {
         e.preventDefault();
         if (id === '' || password === '') {
             alert('아이디와 비밀번호를 모두 입력하세요!');
         } else {
-            dispatch(__login({ id, password }));
-            // if (token) {
-            //     navigate('/');
-            // } else {
-            //     alert('로그인 실패!');
-            // }
+            dispatch(__login({ id, password, navigate }));
         }
     };
 
