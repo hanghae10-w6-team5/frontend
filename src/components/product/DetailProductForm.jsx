@@ -15,6 +15,8 @@ const DetailProductForm = () => {
     const [detail, setDetail] = useState('');
     const [thumbnail, setThumbnail] = useState('');
 
+    const token = localStorage.getItem('authentication');
+
     AWS.config.update({
         region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
         credentials: new AWS.CognitoIdentityCredentials({
@@ -77,25 +79,25 @@ const DetailProductForm = () => {
     const config = {
         headers: {
             'Content-Type': 'application/json',
-            userId: 1,
+            authentication: token,
         },
     };
 
-    const sendData = async () => {
-        console.log(title, price, detail, thumbnail);
-        axios.post(
-            'http://dev-jn.shop/api/posts',
-            {
-                title: title,
-                detail: detail,
-                price: price,
-                thumbnail: thumbnail,
-            },
-            config
-        );
-        // await axios.get('http://dev-jn.shop/api/posts');
-        // navigate(`/${id}`)
-        //그다음 useParam으로
+    const sendData = () => {
+        //try / catch
+        axios
+            .post(
+                'https://dev-jn.shop/api/posts',
+                {
+                    title: title,
+                    detail: detail,
+                    price: price,
+                    thumbnail: thumbnail,
+                },
+                config
+            )
+            .then((res) => navigate(`/${res.data.postId}`));
+        // await axios.get('https://dev-jn.shop/api/posts');
     };
 
     return (
@@ -110,6 +112,7 @@ const DetailProductForm = () => {
                             minLength={2}
                             maxLength={40}
                             style={{
+                                maxWidth: '800px',
                                 width: '800px',
                                 height: '30px',
                                 justifyContent: 'center',
@@ -148,11 +151,6 @@ const DetailProductForm = () => {
                         상품 이미지
                     </InputTitle>
                     <div style={{ flexDirection: 'column', marginTop: '10px' }}>
-                        {/* <input
-                                class="upload-name"
-                                value="첨부파일"
-                                placeholder="첨부파일"
-                            /> */}
                         <Label htmlFor="file">이미지 등록</Label>
                         <Test
                             onChange={(e) => {
@@ -208,6 +206,7 @@ const DetailProductForm = () => {
                     style={{ marginRight: '5px' }}
                     onClick={sendData}
                     type="submit"
+                    color="#ff7e36"
                 >
                     등록하기
                 </Button>
@@ -215,17 +214,6 @@ const DetailProductForm = () => {
                     돌아가기
                 </Button>
             </ButtonBox>
-            {/* <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: '48px',
-                }}
-            >
-                <Button style={{ marginRight: '5px' }}>등록하기</Button>
-                <Button>돌아가기</Button>
-            </div> */}
         </InputSection>
     );
 };
@@ -234,9 +222,7 @@ const InputSection = styled.div`
     max-width: 1200px;
     min-width: 800px;
     height: 750px;
-    /* background-color: green; */
     margin: 0 100px 0 10px;
-    /* border: 1px solid gray; */
 `;
 
 const InputForm = styled.div`
@@ -249,7 +235,6 @@ const InputBox = styled.div`
     width: 1000px;
     height: 50px;
     flex-direction: row;
-    /* background-color: yellow; */
     align-items: center;
     display: flex;
 `;
@@ -258,7 +243,6 @@ const InputTitle = styled.div`
     width: 150px;
     justify-content: center;
     align-items: center;
-    /* background-color: aqua; */
 `;
 
 const Input = styled.div`
@@ -268,10 +252,6 @@ const Input = styled.div`
 `;
 
 const ButtonBox = styled.div`
-    /* width: 600px;
-    height: 50px;
-    display: flex;
-    margin: auto; */
     display: flex;
 
     align-items: center;
@@ -283,7 +263,7 @@ const ButtonBox = styled.div`
 const Button = styled.button`
     width: 100px;
     height: 50px;
-    background-color: #b8b8b8;
+    background-color: ${(props) => props.color || 'gray'};
     border: 0;
     color: white;
     cursor: pointer;
@@ -302,22 +282,12 @@ const Thumbnail = styled.div`
     border: 1px solid #b8b8b8;
 `;
 
-const FileBox = styled.div`
-    display: inline-block;
-    height: 40px;
-    padding: 0 10px;
-    vertical-align: middle;
-    border: 1px solid #dddddd;
-    width: 78%;
-    color: #999999;
-`;
-
 const Label = styled.label`
     display: inline-block;
     padding: 8px 20px 13px 20px;
     color: #fff;
     vertical-align: middle;
-    background-color: #999999;
+    background-color: #ff7e36;
     cursor: pointer;
     height: 17px;
     margin-bottom: 7px;
