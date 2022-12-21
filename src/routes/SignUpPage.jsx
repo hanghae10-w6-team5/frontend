@@ -19,6 +19,7 @@ function SignUp() {
     const [isId, setIsId] = useState(false);
     const [isPassword, setIsPassword] = useState(false);
     const [isConfirmPw, setIsConfirmPw] = useState(false);
+    const [isUsableId, setIsUsableId] = useState(false);
 
     const onChangeId = (e) => {
         const newId = e.target.value;
@@ -62,7 +63,7 @@ function SignUp() {
     };
 
     const handleValidationId = () => {
-        dispatch(__getValidId({ id: id }));
+        dispatch(__getValidId({ id: id, setIsUsableId }));
         setIdMessage('');
     };
 
@@ -70,6 +71,8 @@ function SignUp() {
         e.preventDefault();
         if (id === '' || password === '' || confirmPw === '') {
             alert('빈칸을 입력하세요!');
+        } else if (!isUsableId) {
+            alert('중복확인을 먼저 해주세요!');
         } else {
             try {
                 const res = await axios.post(`/users/signup`, {
@@ -77,16 +80,21 @@ function SignUp() {
                     password: password,
                 });
                 alert(res.data.message);
-                navigate('/');
+                navigate('/login');
             } catch (res) {
                 alert('패스워드에 id가 포함되어 있습니다.');
             }
         }
     };
 
+    const handleHomeBtn = () => {
+        navigate('/');
+    };
+
     return (
         <Wrapper>
             <BoxWrapper>
+                <Homebtn onClick={handleHomeBtn}>↜</Homebtn>
                 <SignUpBox onSubmit={handleSubmit}>
                     <h1>회원가입</h1>
                     <IdForm>
@@ -157,6 +165,25 @@ const BoxWrapper = styled.div`
     width: 600px;
     height: 700px;
     position: relative;
+`;
+
+const Homebtn = styled.button`
+    background-color: white;
+    color: #ff7e36;
+    font-weight: 900;
+    font-size: 40px;
+    top: 20px;
+    left: 20px;
+    border: none;
+    border-radius: 50%;
+    position: absolute;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+    }
 `;
 
 const SignUpBox = styled.form`

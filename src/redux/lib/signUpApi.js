@@ -9,6 +9,7 @@ export const __getValidId = createAsyncThunk(
                 params: payload,
             });
             alert('사용 가능한 아이디 입니다!');
+            payload.setIsUsableId(true);
         } catch (e) {
             console.log(e);
             alert('이미 사용 중인 id 입니다.');
