@@ -7,8 +7,8 @@ export const __getComments = createAsyncThunk(
     async (payload, thunkAPI) => {
         try {
             const data = await axios.get(
-                `http://localhost:3001/comments`
-                // `http://localhost:3001/comments/${payload}`
+                `https://dev-jn.shop/api/posts`
+                // `http://localhost:3001/comments`
             );
             return thunkAPI.fulfillWithValue(data.data);
         } catch (error) {
@@ -24,8 +24,10 @@ export const __submitComment = createAsyncThunk(
     async (payload, thunkAPI) => {
         try {
             const data = await axios.post(
-                `http://localhost:3001/comments`,
+                `https://dev-jn.shop/api/posts/${payload.postId}/comments`,
                 payload
+                // `http://localhost:3001/comments`,
+                // payload
             );
             return thunkAPI.fulfillWithValue(data.data);
         } catch (error) {
@@ -41,10 +43,10 @@ export const __editComment = createAsyncThunk(
     async (payload, thunkAPI) => {
         try {
             const data = await axios.patch(
-                `http://localhost:3001/comments/${payload.id}`,
+                `https://dev-jn.shop/api/posts/${payload.postId}/comments/${payload.commentId}`,
                 payload.edit
-                // `http://localhost:3001/api/posts/${payload.postId}/comments/${payload.commentId}`,
-                // payload.newMemeObj2
+                // `http://localhost:3001/comments/${payload.id}`,
+                // payload.edit
             );
             return thunkAPI.fulfillWithValue(data.data);
         } catch (error) {
@@ -60,9 +62,8 @@ export const __deleteComment = createAsyncThunk(
     async (payload, thunkAPI) => {
         try {
             const data = await axios.delete(
-                `http://localhost:3001/comments/${payload}`
-                // `http://localhost:3001/api/posts/${payload.postId}/comments/${payload.commentId}`,
-                // payload.newMemeObj
+                `https://dev-jn.shop/api/posts/${payload.postId}/comments/${payload.commentId}`
+                // `http://localhost:3001/comments/${payload}`
             );
             return thunkAPI.fulfillWithValue(data.data);
         } catch (error) {
