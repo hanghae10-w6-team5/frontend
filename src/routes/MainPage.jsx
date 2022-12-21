@@ -5,7 +5,7 @@ import { __getPosts } from '../redux/lib/postsApi';
 import { useDispatch, useSelector } from 'react-redux';
 
 const MainPage = () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authentication');
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { posts, error, isLoading } = useSelector((store) => store.posts);
