@@ -45,7 +45,7 @@ const MainPage = () => {
                 }}
             >
                 <StBtn style={{ marginTop: '30px' }} onClick={addProduct}>
-                    상품 등록해주세요 ㅋ
+                    상품 등록
                 </StBtn>
             </div>
             <StPosts>
@@ -88,7 +88,7 @@ const StContainer = styled.div`
 
 const StBtn = styled.button`
     font-family: 'Elice_Bold';
-    width: 150px;
+    width: 130px;
     height: 40px;
     align-items: center;
     cursor: pointer;
