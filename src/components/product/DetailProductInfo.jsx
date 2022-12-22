@@ -142,10 +142,17 @@ const DetailProductInfo = ({ id }) => {
             </ContentButtonWrap>
             <TopInfo>
                 <Thumbnail>
-                    <img
-                        style={{ width: '380px', height: '380px' }}
-                        src={postDetail?.thumbnail}
-                    />
+                    {postDetail?.thumbnail ? (
+                        <img
+                            style={{ width: '380px', height: '380px' }}
+                            src={postDetail?.thumbnail}
+                        />
+                    ) : (
+                        <img
+                            style={{ width: '380px', height: '380px' }}
+                            src={require('../../assets/fonts/pic/빡빡이1.png')}
+                        />
+                    )}
                 </Thumbnail>
                 <RightInfo>
                     <ProductTitle
@@ -248,7 +255,10 @@ const DetailProductInfo = ({ id }) => {
                                             width: '230px',
                                             height: '200px',
                                         }}
-                                        src={postDetail?.thumbnail}
+                                        src={
+                                            postDetail?.thumbnail ||
+                                            require('../../assets/fonts/pic/빡빡이1.png')
+                                        }
                                     />
                                 ) : (
                                     <img

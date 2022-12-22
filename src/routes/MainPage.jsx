@@ -68,14 +68,19 @@ const MainPage = () => {
                             key={post.data.postId}
                             onClick={() => navigate(`/${post.data.postId}`)}
                         >
-                            <img
-                                style={{
-                                    width: '172px',
-                                    height: '172px',
-                                    // border: '1px solid #ffe1d4',
-                                }}
-                                src={post.data.thumbnail}
-                            />
+
+                            {post.data.thumbnail ? (
+                                <img
+                                    style={{ width: '172px', height: '172px' }}
+                                    src={post.data.thumbnail}
+                                />
+                            ) : (
+                                <img
+                                    style={{ width: '172px', height: '172px' }}
+                                    src={require('../assets/fonts/pic/빡빡이1.png')}
+                                />
+                            )}
+                            
                             <div
                                 style={{
                                     marginTop: '12px',
@@ -84,6 +89,12 @@ const MainPage = () => {
                                     fontFamily: 'JalnanOTF',
                                 }}
                             >
+
+   
+
+                        
+ 
+
                                 {post.data.title}
                             </div>
                             <div style={{ fontWeight: 'bold' }}>
