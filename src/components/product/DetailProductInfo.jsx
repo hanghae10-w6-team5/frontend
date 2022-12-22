@@ -9,9 +9,6 @@ import axios from '../../redux/lib/core/axiosBaseInstance';
 
 const DetailProductInfo = ({ id }) => {
     const token = localStorage.getItem('authentication');
-    // console.log(useParams());
-    //수정하기에서 onclick써서 함수 만들고 dispatch로 put으로 수정
-    //삭제하기에서 onclick써서 함수 만들고 dispatch로 삭제
     const dispatch = useDispatch();
     const { post, isLoading, error } = useSelector((store) => store.posts);
     const paramId = id;
@@ -21,9 +18,11 @@ const DetailProductInfo = ({ id }) => {
         title: '',
         detail: '',
     });
+    const postUser = post?.data?.post.userId;
+    const user = post?.data?.loginUser.userId;
 
     const navigate = useNavigate();
-    const postDetail = post?.data;
+    const postDetail = post?.data?.post;
 
     const albumBucketName = 'sblawsimage';
     const [imageSrc, setImageSrc] = useState('');
@@ -50,7 +49,6 @@ const DetailProductInfo = ({ id }) => {
 
     const handleFileInput = (e) => {
         const file = e.target.files[0];
-        console.log(file);
         setThumbnail(
             `https://sblawsimage.s3.ap-northeast-2.amazonaws.com/${file.name}`
         );
@@ -78,7 +76,8 @@ const DetailProductInfo = ({ id }) => {
     };
 
     useEffect(() => {
-        dispatch(__getPostById(id));
+        // dispatch(__getPostById(id));
+        dispatch(__getPostById({ id, token }));
     }, [dispatch]);
 
     const onChangeInputHandler = (e) => {
@@ -91,18 +90,8 @@ const DetailProductInfo = ({ id }) => {
     };
 
     const postModify = () => {
+        if (!token) return alert('로그인이 필요한 서비스 입니다.');
         setIsOpen(true);
-        dispatch(
-            __deletePost({
-                postId: id,
-                navigate,
-                title: postDetail?.title,
-                id: postDetail?.id,
-                detail: postDetail?.detail,
-                price: postDetail?.price,
-                thumbnail: thumbnail,
-            })
-        );
     };
 
     const toggleJjim = async () => {
@@ -122,7 +111,7 @@ const DetailProductInfo = ({ id }) => {
             window.location.reload(false); //리프레쉬
             // alert(res.data.message);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             // alert(error);
         }
     };
@@ -133,12 +122,21 @@ const DetailProductInfo = ({ id }) => {
                 <MainContentButton type="button" onClick={() => navigate('/')}>
                     메인으로
                 </MainContentButton>
-                <ModifyContentButton type="button" onClick={postModify}>
-                    수정
-                </ModifyContentButton>
-                <DeleteContentButton type="button" onClick={postDelete}>
-                    삭제
-                </DeleteContentButton>
+                {user === postUser ? (
+                    <ModifyContentButton type="button" onClick={postModify}>
+                        수정
+                    </ModifyContentButton>
+                ) : (
+                    <p></p>
+                )}
+
+                {user === postUser ? (
+                    <DeleteContentButton type="button" onClick={postDelete}>
+                        삭제
+                    </DeleteContentButton>
+                ) : (
+                    <p></p>
+                )}
             </ContentButtonWrap>
             <TopInfo>
                 <Thumbnail>
