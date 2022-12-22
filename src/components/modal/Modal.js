@@ -22,8 +22,9 @@ export default function Modal({
         setImageSrc('');
     };
 
-    const sendData = async () => {
+    const sendData = async (e) => {
         try {
+            e.preventDefault();
             const res = await axios.put(
                 `/posts/${postId}`,
                 {
@@ -44,6 +45,7 @@ export default function Modal({
             );
             console.log(res);
             onClose();
+            window.location.reload(false);
         } catch (e) {
             console.log(e);
         }

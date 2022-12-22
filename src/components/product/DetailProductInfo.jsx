@@ -106,9 +106,8 @@ const DetailProductInfo = ({ id }) => {
     };
 
     const toggleJjim = async () => {
-        console.log('check');
         try {
-            const res = await axios.put(
+            await axios.put(
                 `/posts/${id}/like`,
                 {},
                 {
@@ -131,6 +130,9 @@ const DetailProductInfo = ({ id }) => {
     return (
         <ProductSection>
             <ContentButtonWrap>
+                <MainContentButton type="button" onClick={() => navigate('/')}>
+                    메인으로
+                </MainContentButton>
                 <ModifyContentButton type="button" onClick={postModify}>
                     수정
                 </ModifyContentButton>
@@ -180,10 +182,6 @@ const DetailProductInfo = ({ id }) => {
                     </Wish>
                 </RightInfo>
             </TopInfo>
-            {/* <div style={{ height: '15vh', padding: '20px' }}>
-                {postDetail?.detail}
-            </div> */}
-            {/* <hr /> */}
             <BottomInfo>
                 <span style={{ fontSize: '24px' }}>상품정보</span>
                 <DetailInfo>
@@ -349,6 +347,8 @@ const OTHER_CONTENT_STYLES = {
 };
 
 const ProductSection = styled.div`
+    font-family: 'Elice_Regular';
+
     max-width: 1200px;
     min-width: 800px;
     /* height: 750px; */
@@ -425,7 +425,7 @@ const Wish = styled.button`
     /* margin-top: 5px;
     margin-right: 5px;
     color: #7c7c7c; */
-    background-color: #ccc;
+    background-color: #ff7e36;
     position: absolute;
     bottom: 0;
     text-align: center;
@@ -466,23 +466,61 @@ const ContentButtonWrap = styled.div`
     text-align: center;
 `;
 
-const ModifyContentButton = styled.button`
+const MainContentButton = styled.button`
+    font-family: 'Elice_Regular';
     width: 80px;
     height: 35px;
-    background-color: #ccc;
+    background-color: white;
+    border: 1px solid #ff7e36;
+    color: #ff7e36;
     position: absolute;
-    border: 0;
+    left: 0px;
+    cursor: pointer;
+
+    border-radius: 5px;
+
+    :hover {
+        background-color: #ff7e36;
+        color: white;
+    }
+`;
+
+const ModifyContentButton = styled.button`
+    font-family: 'Elice_Regular';
+    width: 80px;
+    height: 35px;
+
+    position: absolute;
+    background-color: white;
+    color: #ff7e36;
+    border: 1px solid #ff7e36;
     right: 90px;
     cursor: pointer;
+
+    border-radius: 5px;
+
+    :hover {
+        background-color: #ff7e36;
+        color: white;
+    }
 `;
 const DeleteContentButton = styled.button`
+    font-family: 'Elice_Regular';
     width: 80px;
     height: 35px;
-    background-color: #ccc;
+    background-color: white;
+    color: gray;
     position: absolute;
-    border: 0;
+    border: 1px solid gray;
     right: 0;
     cursor: pointer;
+
+    border-radius: 5px;
+
+    :hover {
+        background-color: gray;
+        color: white;
+    }
 `;
 
 export default DetailProductInfo;
