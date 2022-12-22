@@ -18,8 +18,6 @@ const MainPage = () => {
     const firstPostIndex = lastPostIndex - postsPerPage;
     const currentPosts = posts?.data?.slice(firstPostIndex, lastPostIndex);
 
-    console.log(firstPostIndex, lastPostIndex, currentPage);
-
     const addProduct = () => {
         if (!token) return alert('로그인이 필요한 서비스 입니다');
         return navigate('detailform');
@@ -68,7 +66,6 @@ const MainPage = () => {
                             key={post.data.postId}
                             onClick={() => navigate(`/${post.data.postId}`)}
                         >
-
                             {post.data.thumbnail ? (
                                 <img
                                     style={{ width: '172px', height: '172px' }}
@@ -80,7 +77,7 @@ const MainPage = () => {
                                     src={require('../assets/fonts/pic/빡빡이1.png')}
                                 />
                             )}
-                            
+
                             <div
                                 style={{
                                     marginTop: '12px',
@@ -89,12 +86,6 @@ const MainPage = () => {
                                     fontFamily: 'JalnanOTF',
                                 }}
                             >
-
-   
-
-                        
- 
-
                                 {post.data.title}
                             </div>
                             <div style={{ fontWeight: 'bold' }}>

@@ -9,7 +9,6 @@ export const __getComments = createAsyncThunk(
     async (payload, thunkAPI) => {
         try {
             const data = await instance.get(`/posts/${payload}`);
-            // console.log(data.data);
             return thunkAPI.fulfillWithValue(data.data);
         } catch (error) {
             console.log(error);

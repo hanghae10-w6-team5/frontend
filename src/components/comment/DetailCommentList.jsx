@@ -15,13 +15,12 @@ const DetailCommentList = ({ id }) => {
         try {
             dispatch(__getComments(id));
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }, []);
 
     // 댓글 수정
     const editComment = (id, commentId) => {
-        console.log(id, commentId);
         const editing = prompt('댓글 내용 수정', '');
         dispatch(
             __editComment({
@@ -36,7 +35,6 @@ const DetailCommentList = ({ id }) => {
 
     //댓글 삭제
     const deleteComment = (id, commentId) => {
-        console.log(id, commentId);
         dispatch(
             __deleteComment({
                 postId: id,
@@ -46,7 +44,7 @@ const DetailCommentList = ({ id }) => {
         // dispatch(__getComments(id));
     };
 
-    const item = data?.comments?.map((comment) => {
+    const item = data?.post?.comments?.map((comment) => {
         return (
             <CommentsBox key={comment.commentId}>
                 <Content>
