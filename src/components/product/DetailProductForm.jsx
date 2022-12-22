@@ -13,7 +13,7 @@ const DetailProductForm = () => {
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState(0);
     const [detail, setDetail] = useState('');
-    const [thumbnail, setThumbnail] = useState('');
+    const [thumbnail, setThumbnail] = useState('empty');
 
     const token = localStorage.getItem('authentication');
 
@@ -84,7 +84,9 @@ const DetailProductForm = () => {
     };
 
     const sendData = () => {
-        //try / catch
+        if (title === '' || price === 0 || detail === '') {
+            alert('제목, 가격, 상세 설명란을 기입해주세요!');
+        }
         axios
             .post(
                 'https://dev-jn.shop/api/posts',
@@ -130,6 +132,7 @@ const DetailProductForm = () => {
                     <Input>
                         <input
                             name="price"
+                            type="number"
                             placeholder="숫자를 입력해주세요."
                             style={{
                                 width: '200px',
@@ -219,6 +222,7 @@ const DetailProductForm = () => {
 };
 
 const InputSection = styled.div`
+    font-family: 'Elice_Regular';
     max-width: 1200px;
     min-width: 800px;
     height: 750px;
