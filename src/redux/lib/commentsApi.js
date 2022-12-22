@@ -1,16 +1,15 @@
+// src/redux/lib/commentsApi.js
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import instance from './instance';
+import instance from './core/axiosBaseInstance';
 import { getToken } from './token';
 
-// db에서 필요한 데이터의 id값을 payload로 넘겨 받아 data를 받아옴
+// 댓글 조회
 export const __getComments = createAsyncThunk(
     'getComments',
     async (payload, thunkAPI) => {
         try {
-            const data = await instance.get(
-                `api/posts/${payload}`
-                // `http://localhost:3001/comments`
-            );
+            const data = await instance.get(`/posts/${payload}`);
+            // console.log(data.data);
             return thunkAPI.fulfillWithValue(data.data);
         } catch (error) {
             console.log(error);
@@ -24,18 +23,16 @@ export const __submitComment = createAsyncThunk(
     'submitComment',
     async (payload, thunkAPI) => {
         try {
-            const data = await instance.post(
-                `api/posts/${payload.postId}/comments`,
+            await instance.post(
+                `/posts/${payload.postId}/comments`,
                 { comment: payload.comment }, //data
                 {
                     headers: { authentication: getToken() },
                     params: { postId: payload.postId },
                 } //config
-
-                //params는 객체 혹은 URLSearchParams 객체여야 한다
-                // `http://localhost:3001/comments`,
-                // payload
             );
+            const data = await instance.get(`/posts/${payload.postId}`);
+            console.log(data);
             return thunkAPI.fulfillWithValue(data.data);
         } catch (error) {
             console.log(error);
@@ -49,8 +46,8 @@ export const __editComment = createAsyncThunk(
     'editComment',
     async (payload, thunkAPI) => {
         try {
-            const data = await instance.patch(
-                `api/posts/${payload.postId}/comments/${payload.commentId}`,
+            await instance.patch(
+                `/posts/${payload.postId}/comments/${payload.commentId}`,
                 { comment: payload.comment }, //data(req.body)
                 {
                     headers: { authentication: getToken() },
@@ -59,9 +56,8 @@ export const __editComment = createAsyncThunk(
                         commentId: payload.commentId,
                     },
                 }
-                // `http://localhost:3001/comments/${payload.id}`,
-                // payload.edit
             );
+            const data = await instance.get(`/posts/${payload.postId}`);
             return thunkAPI.fulfillWithValue(data.data);
         } catch (error) {
             console.log(error);
@@ -75,17 +71,17 @@ export const __deleteComment = createAsyncThunk(
     'deleteComment',
     async (payload, thunkAPI) => {
         try {
-            const data = await instance.delete(
-                `api/posts/${payload.postId}/comments/${payload.commentId}`,
+            console.log(payload);
+            await instance.delete(
+                `/posts/${payload.postId}/comments/${payload.commentId}`,
                 {
                     headers: { authentication: getToken() },
-                    params: {
-                        payload,
-                    },
+                    // params: {
+                    //     payload,
+                    // },
                 }
-
-                // `http://localhost:3001/comments/${payload}`
             );
+            const data = await instance.get(`/posts/${payload.postId}`);
             return thunkAPI.fulfillWithValue(data.data);
         } catch (error) {
             console.log(error);

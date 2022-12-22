@@ -3,20 +3,12 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { __submitComment, __getComments } from '../../redux/lib/commentsApi';
 
+//댓글 입력창. param 값을 props로 받아옴.
 const DetailCommentForm = ({ id }) => {
-    const [comments, setComments] = useState(null);
     const [comment, setComment] = useState('', []);
-    // console.log(comment);
-
     const dispatch = useDispatch();
 
-    // const onSubmitCommentHandler = (comment) => {
-    //     dispatch(__submitComment({ id: param.id, comment: comment }));
-    //     console.log(param.id);
-    //     // setComments([...comments, comment]);
-    //     // dispatch(__submitComment({ id: param.id, postId: param.postId }));
-    // };
-
+    // 댓글 등록 버튼
     const addComment = (e) => {
         e.preventDefault();
         if (comment === '') return; // 아무것도 입력하지 않았을 때 dispatch 하지 않음
@@ -28,7 +20,7 @@ const DetailCommentForm = ({ id }) => {
             })
         ).then(() => {
             dispatch(__getComments(id)).then((res) => {
-                setComment(res);
+                setComment('');
             });
         });
     };
@@ -39,14 +31,15 @@ const DetailCommentForm = ({ id }) => {
         } catch (error) {
             console.log(error);
         }
-    }, [dispatch, id]);
+    }, [dispatch]);
 
+    //댓글폼
     return (
         <CommentForm>
             <CommentInputForm>
                 <Input
                     type="text"
-                    onChange={(e) => setComment(e.target.value, [])}
+                    onChange={(e) => setComment(e.target.value)}
                     value={comment}
                     placeholder="댓글을 입력해주세요."
                 ></Input>

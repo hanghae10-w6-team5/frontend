@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -6,19 +6,22 @@ import {
     __deleteComment,
     __getComments,
 } from '../../redux/lib/commentsApi';
-// import { useParams } from 'react-router';
 
 const DetailCommentList = ({ id }) => {
-    // const [state, setState] = useState(null);
     const dispatch = useDispatch();
+    const data = useSelector((store) => store.commentsSlice.data.data);
 
-    const { post, isLoading, error } = useSelector((store) => store.posts);
-    // console.log(post?.data?.comments);
+    useEffect(() => {
+        try {
+            dispatch(__getComments(id));
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
 
-    const comments = post?.data?.comments;
-    // console.log(comments);
-
-    const editComment = async (comment, commentId) => {
+    // 댓글 수정
+    const editComment = (id, commentId) => {
+        console.log(id, commentId);
         const editing = prompt('댓글 내용 수정', '');
         dispatch(
             __editComment({
@@ -27,67 +30,61 @@ const DetailCommentList = ({ id }) => {
                 comment: editing,
             })
         );
-        dispatch(__getComments(id));
+        // dispatch(__getComments(id));
         // setState();
     };
 
-    const deleteComment = (commentId) => {
+    //댓글 삭제
+    const deleteComment = (id, commentId) => {
+        console.log(id, commentId);
         dispatch(
             __deleteComment({
                 postId: id,
                 commentId: commentId,
             })
         );
-        dispatch(__getComments(id));
+        // dispatch(__getComments(id));
     };
+
+    const item = data?.comments?.map((comment) => {
+        return (
+            <CommentsBox key={comment.commentId}>
+                <Content>
+                    <UserId>
+                        {comment.id}
+                        <span
+                            style={{
+                                marginLeft: '20px',
+                                color: '#585858',
+                            }}
+                        >
+                            {comment?.updatedAt}
+                        </span>
+                    </UserId>
+                    <Comment>{comment?.comment}</Comment>
+                </Content>
+                <EditCommentWrap>
+                    <EditCommentButton
+                        // type='button' 을 추가해야 form의 영향에서 벗어남
+                        type="button"
+                        onClick={() => editComment(id, comment?.commentId)}
+                    >
+                        수정
+                    </EditCommentButton>
+                    <DeleteCommentButton
+                        type="button"
+                        onClick={() => deleteComment(id, comment?.commentId)}
+                    >
+                        삭제
+                    </DeleteCommentButton>
+                </EditCommentWrap>
+            </CommentsBox>
+        );
+    });
 
     return (
         <CommentsSection>
-            <CommnetList>
-                {comments?.map((comment) => {
-                    console.log(comments);
-                    return (
-                        <CommentsBox key={comment?.commentId}>
-                            <Content>
-                                <UserId>
-                                    {comment?.id}
-                                    <span
-                                        style={{
-                                            marginLeft: '20px',
-                                            color: '#585858',
-                                        }}
-                                    >
-                                        {comment?.updatedAt}
-                                    </span>
-                                </UserId>
-                                <Comment>{comment?.comment}</Comment>
-                            </Content>
-                            <EditCommentWrap>
-                                <EditCommentButton
-                                    // type='button' 을 추가해야 form의 영향에서 벗어남
-                                    type="button"
-                                    onClick={() =>
-                                        editComment(
-                                            comment?.comment,
-                                            comment?.commentId
-                                        )
-                                    }
-                                >
-                                    수정
-                                </EditCommentButton>
-                                <DeleteCommentButton
-                                    type="button"
-                                    onClick={() =>
-                                        deleteComment(comment?.commentId)
-                                    }
-                                >
-                                    삭제
-                                </DeleteCommentButton>
-                            </EditCommentWrap>
-                        </CommentsBox>
-                    );
-                })}
-            </CommnetList>
+            <CommnetList>{item}</CommnetList>
         </CommentsSection>
     );
 };

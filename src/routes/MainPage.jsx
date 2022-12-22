@@ -62,7 +62,7 @@ const MainPage = () => {
                             <div style={{ maxWidth: '15ch' }}>
                                 {post.data.title}
                             </div>
-                            <div>{post.data.price}</div>
+                            <div>{post.data.price}원</div>
                             <StFlexSpacebtw>
                                 <div>{post.data.id}</div>
                                 <div>{post.data.likes} ❤️</div>
