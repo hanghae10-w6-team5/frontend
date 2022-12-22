@@ -13,7 +13,7 @@ const DetailProductForm = () => {
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState(0);
     const [detail, setDetail] = useState('');
-    const [thumbnail, setThumbnail] = useState('empty');
+    const [thumbnail, setThumbnail] = useState('');
 
     const token = localStorage.getItem('authentication');
 
@@ -172,7 +172,7 @@ const DetailProductForm = () => {
                                     alt="preview-img"
                                 />
                             ) : (
-                                '이미지 프리뷰'
+                                <p>이미지 프리뷰</p>
                             )}
                         </Thumbnail>
                     </div>

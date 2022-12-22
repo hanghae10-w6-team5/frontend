@@ -65,10 +65,18 @@ const MainPage = () => {
                             key={post.data.postId}
                             onClick={() => navigate(`/${post.data.postId}`)}
                         >
-                            <img
-                                style={{ width: '172px', height: '172px' }}
-                                src={post.data.thumbnail}
-                            />
+                            {post.data.thumbnail ? (
+                                <img
+                                    style={{ width: '172px', height: '172px' }}
+                                    src={post.data.thumbnail}
+                                />
+                            ) : (
+                                <img
+                                    style={{ width: '172px', height: '172px' }}
+                                    src={require('../assets/fonts/pic/빡빡이1.png')}
+                                />
+                            )}
+
                             <div style={{ maxWidth: '15ch' }}>
                                 {post.data.title}
                             </div>
