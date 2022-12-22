@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -6,76 +6,84 @@ import {
     __deleteComment,
     __getComments,
 } from '../../redux/lib/commentsApi';
-// import { useParams } from 'react-router';
 
-const DetailCommentList = () => {
-    const [comments, setComments] = useState(null);
-    // patch에서 사용할 id, 수정값의 state를 추가
-    // const [targetId, setTargetId] = useState(null);
-    const [comment, setComment] = useState('');
-    // // const [] =useState('')
+const DetailCommentList = ({ id }) => {
     const dispatch = useDispatch();
-    // const param = useParams();
-    const commentt = useSelector((state) => state.commentsSlice.comments);
-    console.log(commentt);
+    const data = useSelector((store) => store.commentsSlice.data.data);
 
-    const editComment = async (comment, id) => {
+    useEffect(() => {
+        try {
+            dispatch(__getComments(id));
+        } catch (error) {
+            // console.log(error);
+        }
+    }, []);
+
+    // 댓글 수정
+    const editComment = (id, commentId) => {
         const editing = prompt('댓글 내용 수정', '');
-        const edit = {
-            comment: editing,
-        };
-
-        dispatch(__editComment({ id, edit }));
-        dispatch(__getComments());
-        // setComments(commentt);
+        dispatch(
+            __editComment({
+                postId: id,
+                commentId: commentId,
+                comment: editing,
+            })
+        );
+        // dispatch(__getComments(id));
+        // setState();
     };
 
-    const deleteComment = (id) => {
-        dispatch(__deleteComment(id));
-        dispatch(__getComments());
+    //댓글 삭제
+    const deleteComment = (id, commentId) => {
+        dispatch(
+            __deleteComment({
+                postId: id,
+                commentId: commentId,
+            })
+        );
+        // dispatch(__getComments(id));
     };
+
+    const item = data?.post?.comments?.map((comment) => {
+        return (
+            <CommentsBox key={comment.commentId}>
+                <Content>
+                    <UserId style={{ color: '#555555', fontWeight: 'bold' }}>
+                        {comment.id}
+                        <span
+                            style={{
+                                marginLeft: '20px',
+                                color: '#6b6b6b',
+                                fontWeight: 'normal',
+                            }}
+                        >
+                            {comment?.updatedAt}
+                        </span>
+                    </UserId>
+                    <Comment>{comment?.comment}</Comment>
+                </Content>
+                <EditCommentWrap>
+                    <EditCommentButton
+                        // type='button' 을 추가해야 form의 영향에서 벗어남
+                        type="button"
+                        onClick={() => editComment(id, comment?.commentId)}
+                    >
+                        수정
+                    </EditCommentButton>
+                    <DeleteCommentButton
+                        type="button"
+                        onClick={() => deleteComment(id, comment?.commentId)}
+                    >
+                        삭제
+                    </DeleteCommentButton>
+                </EditCommentWrap>
+            </CommentsBox>
+        );
+    });
 
     return (
         <CommentsSection>
-            <CommnetList>
-                {commentt?.map((comment) => {
-                    return (
-                        <CommentsBox key={comment.id}>
-                            <Content>
-                                <UserId>
-                                    {comment.id}
-                                    <span
-                                        style={{
-                                            marginLeft: '20px',
-                                            color: '#585858',
-                                        }}
-                                    >
-                                        {comment.updateAt}
-                                    </span>
-                                </UserId>
-                                <Comment>{comment.comment}</Comment>
-                            </Content>
-                            <EditCommentWrap>
-                                <EditCommentButton
-                                    // type='button' 을 추가해야 form의 영향에서 벗어남
-                                    type="button"
-                                    onClick={() =>
-                                        editComment(comment.comment, comment.id)
-                                    }
-                                >
-                                    수정
-                                </EditCommentButton>
-                                <DeleteCommentButton
-                                    type="button"
-                                    onClick={() => deleteComment(comment.id)}
-                                >
-                                    삭제
-                                </DeleteCommentButton>
-                            </EditCommentWrap>
-                        </CommentsBox>
-                    );
-                })}
-            </CommnetList>
+            <CommnetList>{item}</CommnetList>
         </CommentsSection>
     );
 };
@@ -154,23 +162,37 @@ const EditCommentWrap = styled.div`
 const EditCommentButton = styled.button`
     width: 80px;
     height: 35px;
-    background-color: #ccc;
+    background-color: #ff7e36;
+    color: white;
+    /* font-weight: bold; */
+    font-size: 14px;
+    border-radius: 20px;
     cursor: pointer;
     position: absolute;
     top: 0px;
     right: 10px;
     border: 0;
+    :hover {
+        background-color: #ffa148;
+    }
 `;
 
 const DeleteCommentButton = styled.button`
     width: 80px;
     height: 35px;
-    background-color: #ccc;
+    background-color: #adadad;
+    color: white;
+    /* font-weight: bold; */
+    font-size: 14px;
+    border-radius: 20px;
     cursor: pointer;
     position: absolute;
     top: 45px;
     right: 10px;
     border: 0;
+    :hover {
+        background-color: #cacaca;
+    }
 `;
 
-export default memo(DetailCommentList);
+export default DetailCommentList;

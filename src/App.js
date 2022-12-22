@@ -32,8 +32,25 @@ function App() {
                 ></Route>
                 <Route path="/signup" element={<SignUp />}></Route>
                 <Route path="/login" element={<Login />}></Route>
-                <Route path="/detailform" element={<DetailForm />}></Route>
-                <Route path="/detail" element={<Detail />}></Route>
+                <Route
+                    path="/detailform"
+                    element={
+                        <div>
+                            <TopBar />
+                            <DetailForm />
+                        </div>
+                    }
+                ></Route>
+                {/* <Route path="/detail" element={<Detail />}></Route> */}
+                <Route
+                    path="/:id"
+                    element={
+                        <div>
+                            <TopBar />
+                            <Detail />
+                        </div>
+                    }
+                ></Route>
             </Routes>
         </div>
     );

@@ -6,11 +6,8 @@ import { useNavigate } from 'react-router-dom';
 const TopBar = () => {
     const [isHovering, setiIsHovering] = useState(false);
     const navigate = useNavigate();
-    useEffect(() => {
-        localStorage.setItem('token', 'sadjkashdkj');
-    }, []);
-    const token = localStorage.getItem('token');
-    console.log(token);
+
+    const token = localStorage.getItem('authentication');
 
     const logout = () => {
         localStorage.clear();
@@ -26,10 +23,21 @@ const TopBar = () => {
 
     return (
         <StFlex
-            style={{ justifyContent: 'space-between', alignItems: 'center' }}
+            style={{
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginTop: '20px',
+            }}
         >
             <Link to="/" style={{ color: 'black', textDecoration: 'none' }}>
-                <div style={{ marginLeft: '40px', cursor: 'pointer' }}>
+                <div
+                    style={{
+                        fontFamily: 'JalnanOTF',
+                        marginLeft: '40px',
+                        cursor: 'pointer',
+                        fontSize: '35px',
+                    }}
+                >
                     탈덕마켓
                 </div>
             </Link>
@@ -56,7 +64,7 @@ const TopBar = () => {
                         position: 'relative',
                     }}
                 >
-                    <StBtn mr="10px" onClick={logout}>
+                    <StBtn mr="50px" onClick={logout}>
                         로그아웃
                     </StBtn>
                     <div>
@@ -70,21 +78,23 @@ const TopBar = () => {
                                 alignItems: 'center',
 
                                 position: 'absolute',
-                                top: '5px',
+                                top: '-10px',
+                                left: '90px',
                             }}
                         >
-                            <StUser></StUser>
-
+                            <img
+                                src={require('../../assets/fonts/pic/빡빡이1.png')}
+                            />
                             {isHovering ? (
-                                <p
+                                <StUserBtn
                                     style={{
-                                        fontSize: '10px',
+                                        fontSize: '13px',
                                         cursor: 'pointer',
                                     }}
                                     onClick={() => navigate('/user')}
                                 >
                                     상세보기
-                                </p>
+                                </StUserBtn>
                             ) : (
                                 <p style={{ display: 'none' }}></p>
                             )}
@@ -99,7 +109,7 @@ const TopBar = () => {
 const StFlex = styled.div`
     max-width: 1200px;
     width: 95%;
-    margin: 10px auto;
+    margin: 10px auto 0;
     justify-content: space-between;
 
     display: flex;
@@ -107,7 +117,7 @@ const StFlex = styled.div`
 `;
 
 const StUser = styled.button`
-    width: 40px;
+    width: 80px;
     height: 40px;
 
     border: 0;
@@ -116,18 +126,39 @@ const StUser = styled.button`
     overflow: hidden;
     cursor: pointer;
 
+    transition: all 0.5s;
+
     :hover {
-        background-color: green;
+        background-color: gray;
+    }
+`;
+
+const StUserBtn = styled.button`
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid gray;
+    color: gray;
+    background-color: white;
+    border-radius: 5px;
+
+    :hover {
+        background-color: gray;
+        color: white;
     }
 `;
 
 const StBtn = styled.button`
+    font-family: 'JalnanOTF';
     background-color: white;
     border: 0;
-
+    font-size: 15px;
     margin-right: ${(props) => props.mr || 'none'};
 
     cursor: pointer;
+
+    :hover {
+        color: #ff7e36;
+    }
 `;
 
 export default TopBar;

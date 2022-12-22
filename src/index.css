@@ -14,10 +14,39 @@ code {
 
 @font-face {
     font-family: 'Elice_Bold';
-    src: url(./components/fonts/Elice_Bold.ttf);
+    src: url(./assets/fonts/Elice_Bold.ttf);
 }
 
 @font-face {
     font-family: 'Elice_Regular';
-    src: url(./components/fonts/Elice_Regular.ttf);
+    src: url(./assets/fonts/Elice_Regular.ttf);
+}
+
+@font-face {
+    font-family: 'JalnanOTF';
+    src: url(./assets/fonts/JalnanOTF.otf);
+}
+
+@font-face {
+    font-family: 'Ttangs_Light';
+    src: url(./assets/fonts/Ttangs_Light.otf);
+    /* format('woff2'); */
+    /* font-weight: 700;
+    font-style: normal; */
+}
+
+@font-face {
+    font-family: 'Ttangs_Bold';
+    src: url(./assets/fonts/Ttangs_Bold.otf);
+    /* format('woff2'); */
+    /* font-weight: 700;
+    font-style: normal; */
+}
+
+@font-face {
+    font-family: 'Ttangs_Medium';
+    src: url(./assets/fonts/Ttangs_Medium.otf);
+    /* format('woff2'); */
+    /* font-weight: 700;
+    font-style: normal; */
 }

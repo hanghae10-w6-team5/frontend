@@ -6,7 +6,7 @@ const DetailForm = () => {
     return (
         <Wrap>
             <Title>
-                <h1>상품 등록</h1>
+                <h1 style={{ fontFamily: 'JalnanOTF' }}>상품 등록</h1>
             </Title>
             <DetailProductForm></DetailProductForm>
         </Wrap>

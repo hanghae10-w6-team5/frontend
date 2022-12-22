@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import DetailProductInfo from '../components/product/DetailProductInfo';
-import DetailComments from '../components/comment/DetailComments';
+import DetailCommentList from '../components/comment/DetailCommentList';
+import DetailCommentForm from '../components/comment/DetailCommentForm';
 import styled from 'styled-components';
+import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { __getPosts } from '../redux/lib/postsApi';
 
 const Detail = () => {
+    const { id } = useParams();
+
     return (
         <Wrap>
             <Title>{/* <h1>상품 상세 페이지</h1> */}</Title>
-            <DetailProductInfo></DetailProductInfo>
-            <DetailComments></DetailComments>
+            <DetailProductInfo id={id}></DetailProductInfo>
+            <DetailCommentList id={id}></DetailCommentList>
+            <DetailCommentForm id={id}></DetailCommentForm>
         </Wrap>
     );
 };
