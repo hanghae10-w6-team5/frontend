@@ -9,7 +9,7 @@ import {
 } from '../lib/commentsApi';
 
 const initialState = {
-    comments: [],
+    data: {},
     isLoading: false,
     error: null,
 };
@@ -25,7 +25,7 @@ export const commentsSlice = createSlice({
         },
         [__getComments.fulfilled]: (state, action) => {
             state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-            state.comments = [action.payload.data.comments]; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+            state.data = action.payload; // Store에 있는 data에 서버에서 가져온 data를 넣습니다.
         },
         [__getComments.rejected]: (state, action) => {
             state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
@@ -37,7 +37,7 @@ export const commentsSlice = createSlice({
         },
         [__submitComment.fulfilled]: (state, action) => {
             state.isLoading = false;
-            state.comments = [...state.comments, action.payload.data.comments];
+            state.data = action.payload;
         },
         [__submitComment.rejected]: (state, action) => {
             state.isLoading = false;
@@ -49,13 +49,14 @@ export const commentsSlice = createSlice({
         },
         [__editComment.fulfilled]: (state, action) => {
             state.isLoading = false;
-            state.comments = state.comments.map((e) => ({
-                ...e,
-                comment:
-                    e.commentId === action.payload.commentId
-                        ? action.payload.comment
-                        : e.comment,
-            }));
+            state.data = action.payload;
+            // state.data = state.data.map((e) => ({
+            //     ...e,
+            //     comment:
+            //         e.commentId === action.payload.commentId
+            //             ? action.payload.comment
+            //             : e.comment,
+            // }));
         },
         [__editComment.rejected]: (state, action) => {
             state.isLoading = false;
@@ -67,9 +68,10 @@ export const commentsSlice = createSlice({
         },
         [__deleteComment.fulfilled]: (state, action) => {
             state.isLoading = false;
-            state.comments = state.comments.filter(
-                (comment) => comment.commentId !== action.payload.commentId
-            );
+            state.data = action.payload;
+            // state.comments = state.comments.filter(
+            //     (comment) => comment.commentId !== action.payload.commentId
+            // );
         },
         [__deleteComment.rejected]: (state, action) => {
             state.isLoading = false;
