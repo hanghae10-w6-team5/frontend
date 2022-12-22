@@ -23,7 +23,11 @@ const TopBar = () => {
 
     return (
         <StFlex
-            style={{ justifyContent: 'space-between', alignItems: 'center' }}
+            style={{
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginTop: '20px',
+            }}
         >
             <Link to="/" style={{ color: 'black', textDecoration: 'none' }}>
                 <div
@@ -31,6 +35,7 @@ const TopBar = () => {
                         fontFamily: 'Elice_Bold',
                         marginLeft: '40px',
                         cursor: 'pointer',
+                        fontSize: '35px',
                     }}
                 >
                     탈덕마켓
@@ -73,21 +78,23 @@ const TopBar = () => {
                                 alignItems: 'center',
 
                                 position: 'absolute',
-                                top: '5px',
+                                top: '-10px',
                                 left: '90px',
                             }}
                         >
-                            <StUser></StUser>
+                            <img
+                                src={require('../../assets/fonts/pic/빡빡이1.png')}
+                            />
                             {isHovering ? (
-                                <p
+                                <StUserBtn
                                     style={{
-                                        fontSize: '10px',
+                                        fontSize: '13px',
                                         cursor: 'pointer',
                                     }}
                                     onClick={() => navigate('/user')}
                                 >
                                     상세보기
-                                </p>
+                                </StUserBtn>
                             ) : (
                                 <p style={{ display: 'none' }}></p>
                             )}
@@ -110,7 +117,7 @@ const StFlex = styled.div`
 `;
 
 const StUser = styled.button`
-    width: 40px;
+    width: 80px;
     height: 40px;
 
     border: 0;
@@ -119,8 +126,24 @@ const StUser = styled.button`
     overflow: hidden;
     cursor: pointer;
 
+    transition: all 0.5s;
+
     :hover {
-        background-color: #ff7e36;
+        background-color: gray;
+    }
+`;
+
+const StUserBtn = styled.button`
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid gray;
+    color: gray;
+    background-color: white;
+    border-radius: 5px;
+
+    :hover {
+        background-color: gray;
+        color: white;
     }
 `;
 
@@ -132,6 +155,10 @@ const StBtn = styled.button`
     margin-right: ${(props) => props.mr || 'none'};
 
     cursor: pointer;
+
+    :hover {
+        color: #ff7e36;
+    }
 `;
 
 export default TopBar;
