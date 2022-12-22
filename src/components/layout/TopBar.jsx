@@ -32,7 +32,7 @@ const TopBar = () => {
             <Link to="/" style={{ color: 'black', textDecoration: 'none' }}>
                 <div
                     style={{
-                        fontFamily: 'Elice_Bold',
+                        fontFamily: 'JalnanOTF',
                         marginLeft: '40px',
                         cursor: 'pointer',
                         fontSize: '35px',
@@ -148,10 +148,10 @@ const StUserBtn = styled.button`
 `;
 
 const StBtn = styled.button`
-    font-family: 'Elice_Bold';
+    font-family: 'JalnanOTF';
     background-color: white;
     border: 0;
-
+    font-size: 15px;
     margin-right: ${(props) => props.mr || 'none'};
 
     cursor: pointer;

@@ -39,22 +39,25 @@ const MainPage = () => {
 
     return (
         <StContainer>
-            <img
+            {/* <img
                 style={{
                     width: '100%',
                     height: '200px',
                     boxShadow: '0 0 10px 3px #ff7e36',
                 }}
                 src="https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
-            />
+            /> */}
             <div
                 style={{
+                    width: '100%',
+                    height: '100px',
+                    backgroundColor: '#ff9946',
                     display: 'flex',
                     justifyContent: 'center',
                     margin: '0 0 30px 0',
                 }}
             >
-                <StBtn style={{ marginTop: '30px' }} onClick={addProduct}>
+                <StBtn style={{ marginTop: '28px' }} onClick={addProduct}>
                     상품 등록
                 </StBtn>
             </div>
@@ -65,6 +68,7 @@ const MainPage = () => {
                             key={post.data.postId}
                             onClick={() => navigate(`/${post.data.postId}`)}
                         >
+
                             {post.data.thumbnail ? (
                                 <img
                                     style={{ width: '172px', height: '172px' }}
@@ -76,11 +80,26 @@ const MainPage = () => {
                                     src={require('../assets/fonts/pic/빡빡이1.png')}
                                 />
                             )}
+                            
+                            <div
+                                style={{
+                                    marginTop: '12px',
+                                    marginBottom: '7px',
+                                    maxWidth: '15ch',
+                                    fontFamily: 'JalnanOTF',
+                                }}
+                            >
 
-                            <div style={{ maxWidth: '15ch' }}>
+   
+
+                        
+ 
+
                                 {post.data.title}
                             </div>
-                            <div>{post.data.price}원</div>
+                            <div style={{ fontWeight: 'bold' }}>
+                                {post.data.price}원
+                            </div>
                             <StFlexSpacebtw>
                                 <div>{post.data.id}</div>
                                 <StHeartCount>
@@ -113,7 +132,7 @@ const StHeartCount = styled.div`
 `;
 
 const StContainer = styled.div`
-    font-family: 'Elice_Bold';
+    /* font-family: 'Ttangs_Medium'; */
     display: flex;
     flex-direction: column;
 
@@ -124,22 +143,24 @@ const StContainer = styled.div`
 `;
 
 const StBtn = styled.button`
-    font-family: 'Elice_Bold';
+    font-family: 'JalnanOTF';
+    font-size: 18px;
     width: 130px;
-    height: 40px;
+    height: 45px;
     align-items: center;
     cursor: pointer;
-    border: 1px solid #ff7e36;
+    border: 1px solid #ff975f;
     background-color: #fff;
     color: #ff7e36;
     border-radius: 5px;
 
-    font-weight: bold;
+    /* font-weight: bold; */
     margin: 0 10px 20px 0;
 
     :hover {
         color: #fff;
-        background-color: #ff7e36;
+        background-color: #ff9257;
+        border: 2px solid white;
     }
 `;
 
@@ -153,9 +174,13 @@ const StPosts = styled.div`
 const StPost = styled.div`
     cursor: pointer;
     padding: 20px;
-    box-shadow: 0 0 10px 3px #ff7e36;
+    box-shadow: 0 0 0px 1px #ffc5a6;
+    /* border: 1px solid #ff7e36; */
 
     border-radius: 5px;
+    :hover {
+        box-shadow: 0 0 8px 1px #ffc5a6;
+    }
 `;
 
 const StFlexSpacebtw = styled.div`

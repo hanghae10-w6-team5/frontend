@@ -155,7 +155,14 @@ const DetailProductInfo = ({ id }) => {
                     )}
                 </Thumbnail>
                 <RightInfo>
-                    <ProductTitle>{postDetail?.title}</ProductTitle>
+                    <ProductTitle
+                        style={{
+                            marginTop: '10px',
+                            fontFamily: 'JalnanOTF',
+                        }}
+                    >
+                        {postDetail?.title}
+                    </ProductTitle>
                     <Price>
                         {postDetail?.price}
                         <span
@@ -180,7 +187,7 @@ const DetailProductInfo = ({ id }) => {
                         <Date>수정일자 : {postDetail?.updatedAt}</Date>
                     </div>
                     <Wish type="button" onClick={toggleJjim}>
-                        <span style={{ fontSize: '21px', marginBottom: '5px' }}>
+                        <span style={{ fontSize: '21px', marginBottom: '7px' }}>
                             ♡
                         </span>
                         <span style={{ fontSize: '21px', marginLeft: '4px' }}>
@@ -190,7 +197,9 @@ const DetailProductInfo = ({ id }) => {
                 </RightInfo>
             </TopInfo>
             <BottomInfo>
-                <span style={{ fontSize: '24px' }}>상품정보</span>
+                <span style={{ fontSize: '24px', fontFamily: 'JalnanOTF' }}>
+                    상품정보
+                </span>
                 <DetailInfo>
                     <p style={{ wrap: 'wrap' }}>{postDetail?.detail}</p>
                 </DetailInfo>
@@ -410,6 +419,8 @@ const Price = styled.div`
     height: 70px;
     /* background-color: #94bfff; */
     font-size: 50px;
+    /* font-family: 'JalnanOTF'; */
+    font-weight: bold;
 `;
 
 const SellerId = styled.div`
@@ -433,9 +444,9 @@ const Wish = styled.button`
     align-items: center;
     font-size: 35px;
     /* margin-top: 5px;
-    margin-right: 5px;
-    color: #7c7c7c; */
-    background-color: #ff7e36;
+    margin-right: 5px; */
+    color: #ffffff;
+    background-color: #ff9257;
     position: absolute;
     bottom: 0;
     text-align: center;
@@ -451,6 +462,7 @@ const BottomInfo = styled.div`
     padding-top: 30px;
     padding-bottom: 30px;
     margin-top: 40px;
+    /* font-family: 'Ttangs_Medium'; */
 `;
 
 const DetailInfo = styled.div`
@@ -478,7 +490,7 @@ const ContentButtonWrap = styled.div`
 
 const MainContentButton = styled.button`
     font-family: 'Elice_Regular';
-    width: 80px;
+    width: 95px;
     height: 35px;
     background-color: white;
     border: 1px solid #ff7e36;
@@ -487,7 +499,7 @@ const MainContentButton = styled.button`
     left: 0px;
     cursor: pointer;
 
-    border-radius: 5px;
+    border-radius: 30px;
 
     :hover {
         background-color: #ff7e36;
@@ -507,7 +519,7 @@ const ModifyContentButton = styled.button`
     right: 90px;
     cursor: pointer;
 
-    border-radius: 5px;
+    border-radius: 30px;
 
     :hover {
         background-color: #ff7e36;
@@ -525,7 +537,7 @@ const DeleteContentButton = styled.button`
     right: 0;
     cursor: pointer;
 
-    border-radius: 5px;
+    border-radius: 30px;
 
     :hover {
         background-color: gray;
