@@ -14,8 +14,8 @@ const Detail = () => {
         <Wrap>
             <Title>{/* <h1>상품 상세 페이지</h1> */}</Title>
             <DetailProductInfo id={id}></DetailProductInfo>
-            <DetailCommentList></DetailCommentList>
-            <DetailCommentForm></DetailCommentForm>
+            <DetailCommentList id={id}></DetailCommentList>
+            <DetailCommentForm id={id}></DetailCommentForm>
         </Wrap>
     );
 };

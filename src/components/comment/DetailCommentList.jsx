@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState, useEffect, memo, useCallback } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -8,45 +8,46 @@ import {
 } from '../../redux/lib/commentsApi';
 // import { useParams } from 'react-router';
 
-const DetailCommentList = () => {
-    const [comments, setComments] = useState(null);
-    // patch에서 사용할 id, 수정값의 state를 추가
-    // const [targetId, setTargetId] = useState(null);
-    const [comment, setComment] = useState('');
-    // // const [] =useState('')
+const DetailCommentList = ({ id }) => {
+    // const [state, setState] = useState(null);
     const dispatch = useDispatch();
-    // const param = useParams();
-    // const commentss = useSelector((state) => state.commentsSlice.comments);
-    // console.log(commentss.data);
 
     const { post, isLoading, error } = useSelector((store) => store.posts);
+    // console.log(post?.data?.comments);
 
-    const postDetail = post.data?.data;
-    console.log(post?.data?.data?.comments);
-    const x = post?.data?.data?.comments;
+    const comments = post?.data?.comments;
+    // console.log(comments);
 
-    const editComment = async (comment, id) => {
+    const editComment = async (comment, commentId) => {
         const editing = prompt('댓글 내용 수정', '');
-        const edit = {
-            comment: editing,
-        };
-
-        dispatch(__editComment({ id, edit }));
-        dispatch(__getComments());
-        // setComments(commentt);
+        dispatch(
+            __editComment({
+                postId: id,
+                commentId: commentId,
+                comment: editing,
+            })
+        );
+        dispatch(__getComments(id));
+        // setState();
     };
 
-    const deleteComment = (id) => {
-        dispatch(__deleteComment(id));
-        dispatch(__getComments());
+    const deleteComment = (commentId) => {
+        dispatch(
+            __deleteComment({
+                postId: id,
+                commentId: commentId,
+            })
+        );
+        dispatch(__getComments(id));
     };
 
     return (
         <CommentsSection>
             <CommnetList>
-                {x?.map((comment) => {
+                {comments?.map((comment) => {
+                    console.log(comments);
                     return (
-                        <CommentsBox key={comment?.id}>
+                        <CommentsBox key={comment?.commentId}>
                             <Content>
                                 <UserId>
                                     {comment?.id}
@@ -68,7 +69,7 @@ const DetailCommentList = () => {
                                     onClick={() =>
                                         editComment(
                                             comment?.comment,
-                                            comment?.id
+                                            comment?.commentId
                                         )
                                     }
                                 >
@@ -76,7 +77,9 @@ const DetailCommentList = () => {
                                 </EditCommentButton>
                                 <DeleteCommentButton
                                     type="button"
-                                    onClick={() => deleteComment(comment?.id)}
+                                    onClick={() =>
+                                        deleteComment(comment?.commentId)
+                                    }
                                 >
                                     삭제
                                 </DeleteCommentButton>
@@ -182,4 +185,4 @@ const DeleteCommentButton = styled.button`
     border: 0;
 `;
 
-export default memo(DetailCommentList);
+export default DetailCommentList;
