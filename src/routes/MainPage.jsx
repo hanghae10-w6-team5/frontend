@@ -1,14 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { __getPosts } from '../redux/lib/postsApi';
 import { useDispatch, useSelector } from 'react-redux';
+import Pagination from '../components/pagination/Pagination';
 
 const MainPage = () => {
     const token = localStorage.getItem('authentication');
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { posts, error, isLoading } = useSelector((store) => store.posts);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage, setPostsPerPage] = useState(15);
+
+    const lastPostIndex = currentPage * postsPerPage;
+    const firstPostIndex = lastPostIndex - postsPerPage;
+    const currentPosts = posts?.data?.slice(firstPostIndex, lastPostIndex);
+
+    console.log(firstPostIndex, lastPostIndex, currentPage);
 
     const addProduct = () => {
         if (!token) return alert('로그인이 필요한 서비스 입니다');
@@ -49,10 +59,10 @@ const MainPage = () => {
                 </StBtn>
             </div>
             <StPosts>
-                {posts.data?.map((post) => {
+                {currentPosts?.map((post) => {
                     return (
                         <StPost
-                            key={post.data.id}
+                            key={post.data.postId}
                             onClick={() => navigate(`/${post.data.postId}`)}
                         >
                             <img
@@ -65,15 +75,34 @@ const MainPage = () => {
                             <div>{post.data.price}</div>
                             <StFlexSpacebtw>
                                 <div>{post.data.id}</div>
-                                <div>{post.data.likes} ❤️</div>
+                                <StHeartCount>
+                                    <StHeartNum>{post.data.likes}</StHeartNum>
+                                    <span> ❤️</span>
+                                </StHeartCount>
                             </StFlexSpacebtw>
                         </StPost>
                     );
                 })}
             </StPosts>
+            <Pagination
+                currentPage={currentPage}
+                totalPosts={posts.data?.length}
+                postsPerPage={postsPerPage}
+                setCurrentPage={setCurrentPage}
+            />
         </StContainer>
     );
 };
+
+const StHeartNum = styled.span`
+    position: absolute;
+    bottom: 18px;
+    left: 6px;
+`;
+
+const StHeartCount = styled.div`
+    position: relative;
+`;
 
 const StContainer = styled.div`
     font-family: 'Elice_Bold';
@@ -92,7 +121,6 @@ const StBtn = styled.button`
     height: 40px;
     align-items: center;
     cursor: pointer;
-
     border: 1px solid #ff7e36;
     background-color: #fff;
     color: #ff7e36;
