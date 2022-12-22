@@ -45,14 +45,13 @@ const StPageNumbers = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 3px;
+    gap: 10px;
 `;
 
 const StBtn = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
     width: 30px;
     height: 30px;
     /* ff7e36 f8daca*/
@@ -66,6 +65,7 @@ const StBtn = styled.div`
 
     :hover {
         background-color: #ff7e36;
+        font-weight: bold;
     }
 `;
 

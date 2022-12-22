@@ -50,12 +50,13 @@ const DetailCommentList = ({ id }) => {
         return (
             <CommentsBox key={comment.commentId}>
                 <Content>
-                    <UserId>
+                    <UserId style={{ color: '#555555', fontWeight: 'bold' }}>
                         {comment.id}
                         <span
                             style={{
                                 marginLeft: '20px',
-                                color: '#585858',
+                                color: '#6b6b6b',
+                                fontWeight: 'normal',
                             }}
                         >
                             {comment?.updatedAt}
@@ -163,23 +164,37 @@ const EditCommentWrap = styled.div`
 const EditCommentButton = styled.button`
     width: 80px;
     height: 35px;
-    background-color: #ccc;
+    background-color: #ff7e36;
+    color: white;
+    /* font-weight: bold; */
+    font-size: 14px;
+    border-radius: 20px;
     cursor: pointer;
     position: absolute;
     top: 0px;
     right: 10px;
     border: 0;
+    :hover {
+        background-color: #ffa148;
+    }
 `;
 
 const DeleteCommentButton = styled.button`
     width: 80px;
     height: 35px;
-    background-color: #ccc;
+    background-color: #adadad;
+    color: white;
+    /* font-weight: bold; */
+    font-size: 14px;
+    border-radius: 20px;
     cursor: pointer;
     position: absolute;
     top: 45px;
     right: 10px;
     border: 0;
+    :hover {
+        background-color: #cacaca;
+    }
 `;
 
 export default DetailCommentList;
