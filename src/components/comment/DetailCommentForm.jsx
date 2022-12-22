@@ -65,10 +65,17 @@ const CommentInputForm = styled.form`
 const CommentButton = styled.button`
     width: 80px;
     height: 35px;
-    background-color: #ccc;
+    background-color: #ff7e36;
+    color: white;
+    font-weight: bold;
     cursor: pointer;
+    font-size: 14px;
+    border-radius: 20px;
     border: 0;
     float: right;
+    :hover {
+        background-color: #ffa148;
+    }
 `;
 
 const Input = styled.textarea`

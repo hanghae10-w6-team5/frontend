@@ -150,11 +150,18 @@ const DetailProductForm = () => {
             </InputForm>
             <InputForm style={{ height: '260px', paddingBottom: '10px' }}>
                 <InputBox style={{ height: '260px', alignItems: 'normal' }}>
-                    <InputTitle style={{ marginTop: '10px' }}>
+                    <InputTitle style={{ marginTop: '18px' }}>
                         상품 이미지
                     </InputTitle>
-                    <div style={{ flexDirection: 'column', marginTop: '10px' }}>
-                        <Label htmlFor="file">이미지 등록</Label>
+                    <div
+                        style={{
+                            flexDirection: 'column',
+                            marginTop: '10px',
+                        }}
+                    >
+                        <Label htmlFor="file" style={{ fontStyle: 'normal' }}>
+                            이미지 등록
+                        </Label>
                         <Test
                             onChange={(e) => {
                                 encodeFileToBase64(e.target.files[0]);
@@ -180,7 +187,7 @@ const DetailProductForm = () => {
             </InputForm>
             <InputForm style={{ height: '220px' }}>
                 <InputBox style={{ height: '220px', alignItems: 'normal' }}>
-                    <InputTitle style={{ marginTop: '15px' }}>
+                    <InputTitle style={{ marginTop: '22px' }}>
                         상세 설명
                     </InputTitle>
                     <Input style={{ alignItems: 'center', marginTop: '95px' }}>
@@ -222,7 +229,7 @@ const DetailProductForm = () => {
 };
 
 const InputSection = styled.div`
-    font-family: 'Elice_Regular';
+    /* font-family: 'JalnanOTF'; */
     max-width: 1200px;
     min-width: 800px;
     height: 750px;
@@ -247,6 +254,7 @@ const InputTitle = styled.div`
     width: 150px;
     justify-content: center;
     align-items: center;
+    font-family: 'JalnanOTF';
 `;
 
 const Input = styled.div`
@@ -265,14 +273,15 @@ const ButtonBox = styled.div`
 `;
 
 const Button = styled.button`
-    width: 100px;
-    height: 50px;
-    background-color: ${(props) => props.color || 'gray'};
+    width: 110px;
+    height: 48px;
+    font-size: 15px;
+    background-color: ${(props) => props.color || '#adadad'};
     border: 0;
     color: white;
     cursor: pointer;
 
-    border-radius: 5px;
+    border-radius: 30px;
 `;
 
 const Thumbnail = styled.div`
